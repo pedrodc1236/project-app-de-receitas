@@ -13,6 +13,7 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/profile" component={ Profile } />
         <Route path="/foods" component={ Foods } />
+
       </Switch>
     </BrowserRouter>
   );
