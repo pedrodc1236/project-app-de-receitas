@@ -2,14 +2,14 @@ import React from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
-function Profile() {
+function FoodsNationalities() {
   return (
     <>
-      <Header title="Profile" />
-      <h2>Tela de Profile</h2>
+      <Header title="FoodsNationalities" />
+      <h2>Tela de Food Nationalities</h2>
       <Footer />
     </>
   );
 }
 
-export default Profile;
+export default FoodsNationalities;
