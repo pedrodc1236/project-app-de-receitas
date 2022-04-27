@@ -13,7 +13,7 @@ function Footer() {
       <Link to="/explore">
         <img src={ exploreIcon } data-testid="explore-bottom-btn" alt="exp" />
       </Link>
-      <Link to="/food">
+      <Link to="/foods">
         <img src={ mealIcon } data-testid="food-bottom-btn" alt="food" />
       </Link>
     </footer>
