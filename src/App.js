@@ -6,18 +6,22 @@ import Login from './Pages/Login';
 import Header from './Components/Header';
 import Profile from './Pages/Profile';
 import Foods from './Pages/Foods';
+import Drinks from './Pages/Drinks';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/drinks" component={ Header } />
-        <Route exact path="/explore" component={ Header } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/foods" component={ Foods } />
-      </Switch>
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/explore" component={ Header } />
+          <Route path="/profile" component={ Profile } />
+          <Route path="/foods" component={ Foods } />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

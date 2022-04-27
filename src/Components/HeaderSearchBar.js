@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-// import fetchMealApi from '../services/requestsApi';
+import PropTypes from 'prop-types';
+import { fetchMealApi, fetchCooktailApi } from '../services/requestsApi';
 
-function HeaderSearchBar() {
+function HeaderSearchBar({ title }) {
   const [inputName, setInputName] = useState('');
   const [selectedRadio, setSelectedRadio] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -18,6 +19,14 @@ function HeaderSearchBar() {
   const validation = async () => {
     if (selectedRadio === 'First letter' && inputName.length > 1) {
       global.alert('Your search must have only 1 (one) character');
+    }
+    if (title === 'Foods') {
+      console.log(title);
+      fetchMealApi(selectedRadio, inputName);
+    }
+    if (title === 'Drinks') {
+      console.log(title);
+      fetchCooktailApi(selectedRadio, inputName);
     }
   };
 
@@ -77,5 +86,9 @@ function HeaderSearchBar() {
     </form>
   );
 }
+
+HeaderSearchBar.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default HeaderSearchBar;

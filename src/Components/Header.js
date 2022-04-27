@@ -35,7 +35,7 @@ function Header({ title }) {
       />
 
       { showSearchInput
-        ? <HeaderSearchBar />
+        ? <HeaderSearchBar title={ title } />
         : null }
     </header>
   );
