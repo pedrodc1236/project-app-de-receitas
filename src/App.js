@@ -7,7 +7,6 @@ import Header from './Components/Header';
 import Profile from './Pages/Profile';
 import Foods from './Pages/Foods';
 
-
 function App() {
   return (
     <BrowserRouter>
