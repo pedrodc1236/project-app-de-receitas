@@ -10,11 +10,6 @@
   width: 100%;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
-}
-
 .footer {
   background-color: white;
   bottom: 0;
@@ -22,9 +17,14 @@
   width: 100%;
 }
 
+.rocksGlass {
+  animation: shake 1s infinite ease;
+  max-height: 80vh;
+}
+
 .recipe-img {
-  width: 200px;
   height: 200px;
+  width: 200px;
 }
 
 .header-div {
@@ -32,7 +32,8 @@
   justify-content: space-evenly;
 }
 
-@media (max-width: 360px) {
+@media ( max-width : 360px ) {
+
   .recipe-img {
     height: 200px;
     width: 200px;
