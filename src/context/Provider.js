@@ -5,12 +5,15 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState();
   const [drinksRecipes, setDrinksRecipes] = useState();
+  const [arrayBtns, setArrayBtns] = useState([]);
 
   const contextValue = {
     mealsRecipes,
     setMealsRecipes,
     drinksRecipes,
     setDrinksRecipes,
+    arrayBtns,
+    setArrayBtns,
   };
 
   return (
