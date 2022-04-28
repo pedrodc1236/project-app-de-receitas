@@ -25,31 +25,33 @@ function HeaderSearchBar({ title }) {
   };
 
   const getMealsRecipes = async () => {
-    const { meals } = await fetchMealApi(selectedRadio, inputName);
+    const response = await fetchMealApi(selectedRadio, inputName);
+    const { meals } = response;
 
     if (meals.length === 1) {
       const recipeId = meals[0].idMeal;
       history.push(`/foods/${recipeId}`);
     } else {
-      setMealsRecipes(meals);
+      setMealsRecipes(response);
     }
   };
 
   const getDrinksRecipes = async () => {
-    const { drinks } = await fetchCooktailApi(selectedRadio, inputName);
+    const response = await fetchCooktailApi(selectedRadio, inputName);
+    const { drinks } = response;
 
     if (drinks.length === 1) {
       const recipeId = drinks[0].idDrink;
       history.push(`/drinks/${recipeId}`);
     } else {
-      setDrinksRecipes(drinks);
+      setDrinksRecipes(response);
     }
   };
 
   const onSubmit = async () => {
     validationFirstLetter();
     if (title === 'Foods') {
-      getMealsRecipes();
+      await getMealsRecipes();
     }
     if (title === 'Drinks') {
       await getDrinksRecipes();
