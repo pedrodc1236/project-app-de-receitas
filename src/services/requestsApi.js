@@ -11,6 +11,7 @@ export const fetchMealApi = async (radio, inputName) => {
     request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputName}`);
   }
   const data = await request.json();
+  console.log(data);
   return data;
 };
 

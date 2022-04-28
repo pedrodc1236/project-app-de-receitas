@@ -12,21 +12,19 @@ function HeaderSearchBar({ title }) {
     setIsDisabled(false);
   };
 
-  const handleSearchInput = ({ target }) => {
-    setInputName(target.value);
-  };
-
-  const validation = async () => {
+  const validationFirstLetter = () => {
     if (selectedRadio === 'First letter' && inputName.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     }
+  };
+
+  const onSubmit = async () => {
+    validationFirstLetter();
     if (title === 'Foods') {
-      console.log(title);
-      fetchMealApi(selectedRadio, inputName);
+      await fetchMealApi(selectedRadio, inputName);
     }
     if (title === 'Drinks') {
-      console.log(title);
-      fetchCooktailApi(selectedRadio, inputName);
+      await fetchCooktailApi(selectedRadio, inputName);
     }
   };
 
@@ -36,7 +34,7 @@ function HeaderSearchBar({ title }) {
         type="search"
         data-testid="search-input"
         value={ inputName }
-        onChange={ handleSearchInput }
+        onChange={ ({ target }) => setInputName(target.value) }
       />
 
       <label htmlFor="ingredient">
@@ -78,7 +76,7 @@ function HeaderSearchBar({ title }) {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ validation }
+        onClick={ onSubmit }
         disabled={ isDisabled }
       >
         Search
