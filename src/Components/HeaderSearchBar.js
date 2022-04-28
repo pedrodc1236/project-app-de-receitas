@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchMealApi, fetchCooktailApi } from '../services/requestsApi';
+import AppContext from '../context/AppContext';
 
 function HeaderSearchBar({ title }) {
   const [inputName, setInputName] = useState('');
   const [selectedRadio, setSelectedRadio] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const { setMealsRecipes, setDrinksRecipes } = useContext(AppContext);
+
+  const history = useHistory();
 
   const handleChangeRadioBtn = ({ target }) => {
     setSelectedRadio(target.value);
@@ -18,13 +24,45 @@ function HeaderSearchBar({ title }) {
     }
   };
 
+  const getMealsRecipes = async () => {
+    const response = await fetchMealApi(selectedRadio, inputName);
+    const { meals } = response;
+
+    if (meals) {
+      if (meals.length === 1) {
+        const recipeId = meals[0].idMeal;
+        history.push(`/foods/${recipeId}`);
+      } else {
+        setMealsRecipes(response);
+      }
+    } else {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  };
+
+  const getDrinksRecipes = async () => {
+    const response = await fetchCooktailApi(selectedRadio, inputName);
+    const { drinks } = response;
+
+    if (drinks) {
+      if (drinks.length === 1) {
+        const recipeId = drinks[0].idDrink;
+        history.push(`/drinks/${recipeId}`);
+      } else {
+        setDrinksRecipes(response);
+      }
+    } else {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  };
+
   const onSubmit = async () => {
     validationFirstLetter();
     if (title === 'Foods') {
-      await fetchMealApi(selectedRadio, inputName);
+      await getMealsRecipes();
     }
     if (title === 'Drinks') {
-      await fetchCooktailApi(selectedRadio, inputName);
+      await getDrinksRecipes();
     }
   };
 
