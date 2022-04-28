@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [mealsRecipes, setMealsRecipes] = useState([]);
-  const [drinksRecipes, setDrinksRecipes] = useState([]);
+  const [mealsRecipes, setMealsRecipes] = useState();
+  const [drinksRecipes, setDrinksRecipes] = useState();
 
   const contextValue = {
     mealsRecipes,
