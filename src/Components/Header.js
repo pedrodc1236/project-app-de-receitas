@@ -16,23 +16,25 @@ function Header({ title }) {
 
   return (
     <header>
-      <input
-        type="image"
-        alt="Profile Icon"
-        data-testid="profile-top-btn"
-        src={ profileIcon }
-        onClick={ profileRedirect }
-      />
+      <div className="header-div">
+        <input
+          type="image"
+          alt="Profile Icon"
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          onClick={ profileRedirect }
+        />
 
-      <h1 data-testid="page-title">{ title }</h1>
+        <h1 data-testid="page-title">{ title }</h1>
 
-      <input
-        type="image"
-        alt="Search Icon"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-        onClick={ () => setShowSearchInput(!showSearchInput) }
-      />
+        <input
+          type="image"
+          alt="Search Icon"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+          onClick={ () => setShowSearchInput(!showSearchInput) }
+        />
+      </div>
 
       { showSearchInput
         ? <HeaderSearchBar title={ title } />
