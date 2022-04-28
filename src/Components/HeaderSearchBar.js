@@ -28,11 +28,15 @@ function HeaderSearchBar({ title }) {
     const response = await fetchMealApi(selectedRadio, inputName);
     const { meals } = response;
 
-    if (meals.length === 1) {
-      const recipeId = meals[0].idMeal;
-      history.push(`/foods/${recipeId}`);
+    if (meals) {
+      if (meals.length === 1) {
+        const recipeId = meals[0].idMeal;
+        history.push(`/foods/${recipeId}`);
+      } else {
+        setMealsRecipes(response);
+      }
     } else {
-      setMealsRecipes(response);
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   };
 
@@ -40,11 +44,15 @@ function HeaderSearchBar({ title }) {
     const response = await fetchCooktailApi(selectedRadio, inputName);
     const { drinks } = response;
 
-    if (drinks.length === 1) {
-      const recipeId = drinks[0].idDrink;
-      history.push(`/drinks/${recipeId}`);
+    if (drinks) {
+      if (drinks.length === 1) {
+        const recipeId = drinks[0].idDrink;
+        history.push(`/drinks/${recipeId}`);
+      } else {
+        setDrinksRecipes(response);
+      }
     } else {
-      setDrinksRecipes(response);
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   };
 
