@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchMealApi, fetchCooktailApi } from '../services/requestsApi';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import { fetchCocktailApi, fetchMealApi } from '../services/requestsApi';
 
 function HeaderSearchBar({ title }) {
   const [inputName, setInputName] = useState('');
@@ -41,7 +41,7 @@ function HeaderSearchBar({ title }) {
   };
 
   const getDrinksRecipes = async () => {
-    const response = await fetchCooktailApi(selectedRadio, inputName);
+    const response = await fetchCocktailApi(selectedRadio, inputName);
     const { drinks } = response;
 
     if (drinks) {

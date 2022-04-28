@@ -14,7 +14,7 @@ export const fetchMealApi = async (radio, inputName) => {
   return data;
 };
 
-export const fetchCooktailApi = async (radio, inputName) => {
+export const fetchCocktailApi = async (radio, inputName) => {
   let request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
 
   if (radio === 'Ingredient') {

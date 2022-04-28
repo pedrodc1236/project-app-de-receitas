@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
-import AppContext from '../../context/AppContext';
-import { fetchCooktailApi } from '../../services/requestsApi';
+import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
+import AppContext from '../../context/AppContext';
+import { fetchCocktailApi } from '../../services/requestsApi';
 
 const MAX_INDEX = 12;
 
@@ -12,7 +12,7 @@ function Drinks() {
 
   useEffect(() => {
     const getDrinksRecipes = async () => {
-      const response = await fetchCooktailApi();
+      const response = await fetchCocktailApi();
       setDrinksRecipes(response);
     };
     getDrinksRecipes();
