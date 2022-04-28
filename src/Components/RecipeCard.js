@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 function RecipeCard({ name, thumb, index }) {
   return (
     <div data-testid={ `${index}-recipe-card` }>
-      <img src={ thumb } alt={ name } data-testid={ `${index}-card-img` } />
+      <img
+        className="recipe-img"
+        src={ thumb }
+        alt={ name }
+        data-testid={ `${index}-card-img` }
+      />
       <h3 data-testid={ `${index}-card-name` }>{name}</h3>
     </div>
   );
