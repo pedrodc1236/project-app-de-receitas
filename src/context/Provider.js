@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [teste, setTeste] = useState('DEU CERTO!');
+  const [mealsRecipes, setMealsRecipes] = useState([]);
+  const [drinksRecipes, setDrinksRecipes] = useState([]);
   const contextValue = {
-    teste,
-    setTeste,
+    mealsRecipes,
+    setMealsRecipes,
+    drinksRecipes,
+    setDrinksRecipes,
   };
 
   return (
