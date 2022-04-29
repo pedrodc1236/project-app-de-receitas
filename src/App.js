@@ -26,10 +26,10 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route path="/foods" component={ Foods } />
-          <Route path="/drinks" component={ Drinks } />
           <Route path="/foods/:id" component={ FoodRecipeDetail } />
           <Route path="/drinks/:id" component={ DrinkRecipeDetail } />
+          <Route path="/foods" component={ Foods } />
+          <Route path="/drinks" component={ Drinks } />
           <Route path="/foods/:id/in-progress" component={ FoodRecipeInProgress } />
           <Route path="/drinks/:id/in-progress" component={ DrinkRecipeInProgress } />
           <Route path="/explore" component={ Explore } />
