@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import ButtonsFilter from '../../Components/ButtonsFilter';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
@@ -21,11 +22,13 @@ function Drinks() {
   return (
     <>
       <Header title="Drinks" />
+      <ButtonsFilter title="Drinks" />
       {drinksRecipes?.drinks.filter((recipe, index) => index < MAX_INDEX)
         .map((recipe, index) => {
           const { strDrink, strDrinkThumb, idDrink } = recipe;
           return (
             <RecipeCard
+              pageTitle="drinks"
               key={ index }
               name={ strDrink }
               thumb={ strDrinkThumb }
