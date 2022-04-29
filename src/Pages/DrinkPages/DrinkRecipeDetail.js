@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import { fetchCocktailByIdAPI } from '../../services/requestsApi';
+import { fetchCocktailByIdAPI, fetchMealApi } from '../../services/requestsApi';
+
+const MAX_RECOMENDATIONS_INDEX = 6;
 
 function DrinkRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
+  const [recomendations, setRecomendations] = useState();
 
   const { id } = match.params;
 
@@ -24,12 +28,15 @@ function DrinkRecipeDetail({ match }) {
       setRecipe(drinks[0]);
       getRecipeIngredients(drinks[0]);
     };
+    const getMealRecomendations = async () => {
+      const { meals } = await fetchMealApi();
+      setRecomendations(meals);
+    };
     getCocktailById();
+    getMealRecomendations();
   }, [id]);
 
   const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
-
-  console.log(recipe);
 
   return (
     <>
@@ -81,7 +88,20 @@ function DrinkRecipeDetail({ match }) {
       </section>
 
       <section>
-        <h3 data-testid="0-recomendation-card">RECOMENDATION CARD</h3>
+        <h3>Recommended</h3>
+        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+          .map((recomendation, index) => {
+            const { strMeal, strMealThumb, idMeal } = recomendation;
+            return (
+              <RecomendationRecipeCard
+                key={ index }
+                name={ strMeal }
+                thumb={ strMealThumb }
+                id={ idMeal }
+                index={ index }
+              />
+            );
+          })}
       </section>
 
       <button type="button" data-testid="start-recipe-btn">Start Recipe</button>

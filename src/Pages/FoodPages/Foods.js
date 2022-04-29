@@ -6,7 +6,7 @@ import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
 import { fetchMealApi } from '../../services/requestsApi';
 
-const MAX_INDEX = 12;
+const MAX_RECIPES_INDEX = 12;
 
 function Foods() {
   const { mealsRecipes, setMealsRecipes } = useContext(AppContext);
@@ -23,7 +23,7 @@ function Foods() {
     <>
       <Header title="Foods" />
       <ButtonsFilter title="Foods" />
-      {mealsRecipes?.meals.filter((_, index) => index < MAX_INDEX)
+      {mealsRecipes?.meals.filter((_, index) => index < MAX_RECIPES_INDEX)
         .map((recipe, index) => {
           const { strMeal, strMealThumb, idMeal } = recipe;
           return (

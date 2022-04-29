@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import { fetchMealByIdAPI } from '../../services/requestsApi';
+import { fetchCocktailApi, fetchMealByIdAPI } from '../../services/requestsApi';
+
+const MAX_RECOMENDATIONS_INDEX = 6;
 
 function FoodRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
+  const [recomendations, setRecomendations] = useState();
 
   const { id } = match.params;
 
@@ -24,10 +28,17 @@ function FoodRecipeDetail({ match }) {
       setRecipe(meals[0]);
       getRecipeIngredients(meals[0]);
     };
+    const getCocktailRecomendations = async () => {
+      const { drinks } = await fetchCocktailApi();
+      setRecomendations(drinks);
+    };
     getMealById();
+    getCocktailRecomendations();
   }, [id]);
 
-  const { strMealThumb, strMeal, strCategory, strInstructions, strYouTube } = recipe;
+  const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
+
+  const videoYouTube = strYoutube?.split('=')[1];
 
   return (
     <>
@@ -80,16 +91,31 @@ function FoodRecipeDetail({ match }) {
 
       <section>
         <iframe
-          src={ strYouTube }
-          title="Recipe Video"
           width="300"
           height="200"
           data-testid="video"
+          src={ `https://www.youtube.com/embed/${videoYouTube}` }
+          title="Recipe YouTube video player"
+          frameBorder="0"
+          allowFullScreen
         />
       </section>
 
       <section>
-        <h3 data-testid="0-recomendation-card">RECOMENDATION CARD</h3>
+        <h3>Recommended</h3>
+        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+          .map((recomendation, index) => {
+            const { strDrink, strDrinkThumb, idDrink } = recomendation;
+            return (
+              <RecomendationRecipeCard
+                key={ index }
+                name={ strDrink }
+                thumb={ strDrinkThumb }
+                id={ idDrink }
+                index={ index }
+              />
+            );
+          })}
       </section>
 
       <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
