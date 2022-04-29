@@ -4,6 +4,7 @@ import Footer from '../../Components/Footer';
 import AppContext from '../../context/AppContext';
 import { fetchCooktailApi } from '../../services/requestsApi';
 import RecipeCard from '../../Components/RecipeCard';
+import ButtonsFilter from '../../Components/ButtonsFilter';
 
 const MAX_INDEX = 12;
 
@@ -21,6 +22,7 @@ function Drinks() {
   return (
     <>
       <Header title="Drinks" />
+      <ButtonsFilter title="Drinks" />
       {drinksRecipes?.drinks.filter((recipe, index) => index < MAX_INDEX)
         .map((recipe, index) => {
           const { strDrink, strDrinkThumb, idDrink } = recipe;
