@@ -28,6 +28,7 @@ function Drinks() {
           const { strDrink, strDrinkThumb, idDrink } = recipe;
           return (
             <RecipeCard
+              pageTitle="drinks"
               key={ index }
               name={ strDrink }
               thumb={ strDrinkThumb }

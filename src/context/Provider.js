@@ -6,6 +6,7 @@ function Provider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState();
   const [drinksRecipes, setDrinksRecipes] = useState();
   const [arrayBtns, setArrayBtns] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   const contextValue = {
     mealsRecipes,
@@ -14,6 +15,8 @@ function Provider({ children }) {
     setDrinksRecipes,
     arrayBtns,
     setArrayBtns,
+    selectedFilter,
+    setSelectedFilter,
   };
 
   return (

@@ -5,7 +5,8 @@ import AppContext from '../context/AppContext';
 import { mealCategoryRequest,
   cookTailCategoryRequest,
   mealRequestForCategoryBtn,
-  cookTailRequestForCategoryBtn } from '../services/requestsApi';
+  cookTailRequestForCategoryBtn,
+  mealApiInicialValue, cooktailApiInicialValue } from '../services/requestsApi';
 
 function ButtonsFilter({ title }) {
   const {
@@ -13,6 +14,8 @@ function ButtonsFilter({ title }) {
     setArrayBtns,
     setMealsRecipes,
     setDrinksRecipes,
+    selectedFilter,
+    setSelectedFilter,
   } = useContext(AppContext);
 
   const MAX_BTNS = 5;
@@ -36,17 +39,49 @@ function ButtonsFilter({ title }) {
     if (title === 'Foods') {
       const btnCategory = await mealRequestForCategoryBtn(target.value);
       setMealsRecipes(btnCategory);
+      if (target.value === selectedFilter) {
+        const apiInicial = await mealApiInicialValue();
+        setMealsRecipes(apiInicial);
+        setSelectedFilter('');
+      } else {
+        setSelectedFilter(target.value);
+      }
     }
 
     if (title === 'Drinks') {
-      console.log('oi');
       const btnCategory = await cookTailRequestForCategoryBtn(target.value);
       setDrinksRecipes(btnCategory);
+      if (target.value === selectedFilter) {
+        const apiInicial = await cooktailApiInicialValue();
+        setDrinksRecipes(apiInicial);
+        setSelectedFilter('');
+      } else {
+        setSelectedFilter(target.value);
+      }
+    }
+  };
+
+  const clickBtnAll = async () => {
+    if (title === 'Foods') {
+      const apiInicial = await mealApiInicialValue();
+      setMealsRecipes(apiInicial);
+    }
+
+    if (title === 'Drinks') {
+      const apiInicial = await cooktailApiInicialValue();
+      setDrinksRecipes(apiInicial);
     }
   };
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ clickBtnAll }
+      >
+        All
+      </button>
       {
         arrayBtns.map((el, index) => (
           index < MAX_BTNS
