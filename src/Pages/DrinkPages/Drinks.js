@@ -23,7 +23,7 @@ function Drinks() {
     <>
       <Header title="Drinks" />
       <ButtonsFilter title="Drinks" />
-      {drinksRecipes?.drinks.filter((recipe, index) => index < MAX_INDEX)
+      {drinksRecipes?.drinks.filter((_, index) => index < MAX_INDEX)
         .map((recipe, index) => {
           const { strDrink, strDrinkThumb, idDrink } = recipe;
           return (

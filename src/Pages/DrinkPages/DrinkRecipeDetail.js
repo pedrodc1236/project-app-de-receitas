@@ -6,18 +6,28 @@ import { fetchCocktailByIdAPI } from '../../services/requestsApi';
 
 function DrinkRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
+  const [ingredients, setIngredients] = useState([]);
 
   const { id } = match.params;
+
+  const getRecipeIngredients = (recipeData) => {
+    const recipeArray = Object.entries(recipeData);
+
+    const recipeIngredients = recipeArray
+      .filter((element) => element[0].includes('strIngredient') && element[1]);
+    setIngredients(recipeIngredients.length);
+  };
 
   useEffect(() => {
     const getCocktailById = async () => {
       const { drinks } = await fetchCocktailByIdAPI(id);
       setRecipe(drinks[0]);
+      getRecipeIngredients(drinks[0]);
     };
     getCocktailById();
   }, [id]);
 
-  const { strDrinkThumb, strDrink, strCategory, strInstructions, strVideo } = recipe;
+  const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
   console.log(recipe);
 
@@ -30,7 +40,7 @@ function DrinkRecipeDetail({ match }) {
 
         <div>
           <h1 data-testid="recipe-title">{ strDrink }</h1>
-          <h5 data-testid="recipe-category">{ strCategory}</h5>
+          <h5 data-testid="recipe-category">{ strAlcoholic}</h5>
           <input
             type="image"
             src={ ShareIcon }
@@ -47,22 +57,27 @@ function DrinkRecipeDetail({ match }) {
       </header>
 
       <section>
-        <h1 data-testid="0-ingredient-name-and-measure">Ingredients</h1>
+        <h3>Ingredients</h3>
+        <ul>
+          {Array(ingredients).fill().map((_, index) => {
+            const recipeMeasure = recipe[`strMeasure${index + 1}`];
+            const recipeIngredient = recipe[`strIngredient${index + 1}`];
+
+            return (
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${recipeMeasure} ${recipeIngredient}`}
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <section>
         <h3>Instructions</h3>
         <p data-testid="instructions">{ strInstructions }</p>
-      </section>
-
-      <section>
-        <iframe
-          src={ strVideo }
-          title="Recipe Video"
-          width="300"
-          height="200"
-          data-testid="video"
-        />
       </section>
 
       <section>

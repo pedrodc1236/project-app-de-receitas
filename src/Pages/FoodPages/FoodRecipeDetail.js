@@ -6,20 +6,28 @@ import { fetchMealByIdAPI } from '../../services/requestsApi';
 
 function FoodRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
+  const [ingredients, setIngredients] = useState([]);
 
   const { id } = match.params;
+
+  const getRecipeIngredients = (recipeData) => {
+    const recipeArray = Object.entries(recipeData);
+
+    const recipeIngredients = recipeArray
+      .filter((element) => element[0].includes('strIngredient') && element[1]);
+    setIngredients(recipeIngredients.length);
+  };
 
   useEffect(() => {
     const getMealById = async () => {
       const { meals } = await fetchMealByIdAPI(id);
       setRecipe(meals[0]);
+      getRecipeIngredients(meals[0]);
     };
     getMealById();
   }, [id]);
 
   const { strMealThumb, strMeal, strCategory, strInstructions, strYouTube } = recipe;
-
-  console.log(recipe);
 
   return (
     <>
@@ -47,7 +55,22 @@ function FoodRecipeDetail({ match }) {
       </header>
 
       <section>
-        <h1 data-testid="0-ingredient-name-and-measure">Ingredients</h1>
+        <h3>Ingredients</h3>
+        <ul>
+          {Array(ingredients).fill().map((_, index) => {
+            const recipeMeasure = recipe[`strMeasure${index + 1}`];
+            const recipeIngredient = recipe[`strIngredient${index + 1}`];
+
+            return (
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${recipeMeasure} ${recipeIngredient}`}
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <section>
