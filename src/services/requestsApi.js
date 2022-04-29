@@ -29,3 +29,15 @@ export const fetchCocktailApi = async (radio, inputName) => {
   const data = await request.json();
   return data;
 };
+
+export const fetchMealByIdAPI = async (id) => {
+  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const data = await request.json();
+  return data;
+};
+
+export const fetchCocktailByIdAPI = async (id) => {
+  const request = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const data = await request.json();
+  return data;
+};
