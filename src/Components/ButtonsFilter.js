@@ -1,12 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
-import { mealCategoryRequest,
-  cookTailCategoryRequest,
+import {
+  cocktailCategoryRequest,
+  cocktailRequestForCategoryBtn,
+  fetchCocktailApi,
+} from '../services/requestsCocktailApi';
+import {
+  fetchMealApi,
+  mealCategoryRequest,
   mealRequestForCategoryBtn,
-  cookTailRequestForCategoryBtn,
-  mealApiInicialValue, cooktailApiInicialValue } from '../services/requestsApi';
+} from '../services/requestsMealApi';
 
 function ButtonsFilter({ title }) {
   const {
@@ -26,7 +30,7 @@ function ButtonsFilter({ title }) {
       setArrayBtns(apiReturn);
     }
     if (title === 'Drinks') {
-      const apiReturn = await cookTailCategoryRequest();
+      const apiReturn = await cocktailCategoryRequest();
       setArrayBtns(apiReturn);
     }
   };
@@ -40,7 +44,7 @@ function ButtonsFilter({ title }) {
       const btnCategory = await mealRequestForCategoryBtn(target.value);
       setMealsRecipes(btnCategory);
       if (target.value === selectedFilter) {
-        const apiInicial = await mealApiInicialValue();
+        const apiInicial = await fetchMealApi();
         setMealsRecipes(apiInicial);
         setSelectedFilter('');
       } else {
@@ -49,10 +53,10 @@ function ButtonsFilter({ title }) {
     }
 
     if (title === 'Drinks') {
-      const btnCategory = await cookTailRequestForCategoryBtn(target.value);
+      const btnCategory = await cocktailRequestForCategoryBtn(target.value);
       setDrinksRecipes(btnCategory);
       if (target.value === selectedFilter) {
-        const apiInicial = await cooktailApiInicialValue();
+        const apiInicial = await fetchCocktailApi();
         setDrinksRecipes(apiInicial);
         setSelectedFilter('');
       } else {
@@ -63,12 +67,12 @@ function ButtonsFilter({ title }) {
 
   const clickBtnAll = async () => {
     if (title === 'Foods') {
-      const apiInicial = await mealApiInicialValue();
+      const apiInicial = await fetchMealApi();
       setMealsRecipes(apiInicial);
     }
 
     if (title === 'Drinks') {
-      const apiInicial = await cooktailApiInicialValue();
+      const apiInicial = await fetchCocktailApi();
       setDrinksRecipes(apiInicial);
     }
   };

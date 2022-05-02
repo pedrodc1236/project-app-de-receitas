@@ -4,7 +4,7 @@ import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
-import { fetchMealApi } from '../../services/requestsApi';
+import { fetchMealApi } from '../../services/requestsMealApi';
 
 const MAX_RECIPES_INDEX = 12;
 

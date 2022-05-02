@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
-import { fetchCocktailApi, fetchMealApi } from '../services/requestsApi';
+import { fetchCocktailApi } from '../services/requestsCocktailApi';
+import { fetchMealApi } from '../services/requestsMealApi';
 
 function HeaderSearchBar({ title }) {
   const [inputName, setInputName] = useState('');

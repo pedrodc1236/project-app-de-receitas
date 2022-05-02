@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import { fetchCocktailByIdAPI, fetchMealApi } from '../../services/requestsApi';
+import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
+import { fetchMealApi } from '../../services/requestsMealApi';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
