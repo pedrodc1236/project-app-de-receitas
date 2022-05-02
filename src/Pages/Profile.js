@@ -6,9 +6,9 @@ import Footer from '../Components/Footer';
 function Profile({ history }) {
   const HandleLocalStorage = () => JSON.parse(localStorage.getItem('user')).email;
   const onClickLogout = () => {
-    localStorage.setItem('mealsToken', JSON.stringify(''));
-    localStorage.setItem('cocktailsToken', JSON.stringify(''));
-    localStorage.setItem('user', JSON.stringify(''));
+    localStorage.removeItem('mealsToken');
+    localStorage.removeItem('cocktailsToken');
+    localStorage.removeItem('user');
     history.push('/');
   };
 
