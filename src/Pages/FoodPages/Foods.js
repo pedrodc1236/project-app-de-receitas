@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import Header from '../../Components/Header';
-import Footer from '../../Components/Footer';
-import AppContext from '../../context/AppContext';
-import { fetchMealApi } from '../../services/requestsApi';
-import RecipeCard from '../../Components/RecipeCard';
 import ButtonsFilter from '../../Components/ButtonsFilter';
+import Footer from '../../Components/Footer';
+import Header from '../../Components/Header';
+import RecipeCard from '../../Components/RecipeCard';
+import AppContext from '../../context/AppContext';
+import { fetchMealApi } from '../../services/requestsMealApi';
 
-const MAX_INDEX = 12;
+const MAX_RECIPES_INDEX = 12;
 
 function Foods() {
   const { mealsRecipes, setMealsRecipes } = useContext(AppContext);
@@ -23,7 +23,7 @@ function Foods() {
     <>
       <Header title="Foods" />
       <ButtonsFilter title="Foods" />
-      {mealsRecipes?.meals.filter((recipe, index) => index < MAX_INDEX)
+      {mealsRecipes?.meals.filter((_, index) => index < MAX_RECIPES_INDEX)
         .map((recipe, index) => {
           const { strMeal, strMealThumb, idMeal } = recipe;
           return (
