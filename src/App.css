@@ -32,9 +32,14 @@
   justify-content: space-evenly;
 }
 
-.btn-ingredient, .btn-ingredient-drinks {
+.btn-ingredient, .btn-ingredient-drinks, .btn-nationality {
   background-color: white;
   border: none;
+}
+
+.img-foods {
+  height: 200px;
+  width: 200px;
 }
 
 @media ( max-width : 360px ) {
