@@ -4,20 +4,34 @@ import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
-import { fetchCocktailApi } from '../../services/requestsCocktailApi';
+import { fetchCocktailApi,
+  FilterByIngredientDrinks } from '../../services/requestsCocktailApi';
 
 const MAX_RECIPES_INDEX = 12;
 
 function Drinks() {
-  const { drinksRecipes, setDrinksRecipes } = useContext(AppContext);
+  const {
+    drinksRecipes,
+    setDrinksRecipes,
+    accessDrinks,
+    ingredientDrinks,
+  } = useContext(AppContext);
 
   useEffect(() => {
     const getDrinksRecipes = async () => {
       const response = await fetchCocktailApi();
       setDrinksRecipes(response);
     };
-    getDrinksRecipes();
-  }, [setDrinksRecipes]);
+    const getByFilterIngredientDrinks = async () => {
+      const response = await FilterByIngredientDrinks(ingredientDrinks);
+      setDrinksRecipes(response);
+    };
+    if (accessDrinks) {
+      getByFilterIngredientDrinks();
+    } else {
+      getDrinksRecipes();
+    }
+  }, [setDrinksRecipes, accessDrinks, ingredientDrinks]);
 
   return (
     <>

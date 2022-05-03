@@ -32,6 +32,11 @@
   justify-content: space-evenly;
 }
 
+.btn-ingredient, .btn-ingredient-drinks {
+  background-color: white;
+  border: none;
+}
+
 @media ( max-width : 360px ) {
 
   .recipe-img {
