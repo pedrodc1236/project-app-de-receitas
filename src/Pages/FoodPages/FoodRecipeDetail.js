@@ -5,6 +5,7 @@ import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailApi } from '../../services/requestsCocktailApi';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
+import '../RecipeDetails.css';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
@@ -43,30 +44,37 @@ function FoodRecipeDetail({ match }) {
 
   return (
     <>
-      <header>
-        <div>
-          <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
-        </div>
+      <img
+        src={ strMealThumb }
+        alt={ strMeal }
+        data-testid="recipe-photo"
+        className="recipe-details-photo"
+      />
 
-        <div>
-          <h1 data-testid="recipe-title">{ strMeal }</h1>
+      <header className="recipe-details-header">
+        <h1 data-testid="recipe-title">{ strMeal }</h1>
+
+        <div className="recipe-details-info">
           <h5 data-testid="recipe-category">{ strCategory}</h5>
-          <input
-            type="image"
-            src={ ShareIcon }
-            alt="Share Icon"
-            data-testid="share-btn"
-          />
-          <input
-            type="image"
-            src={ WhiteHeartIcon }
-            alt="White Heart Icon"
-            data-testid="favorite-btn"
-          />
+
+          <div className="recipe-details-icons">
+            <input
+              type="image"
+              src={ ShareIcon }
+              alt="Share Icon"
+              data-testid="share-btn"
+            />
+            <input
+              type="image"
+              src={ WhiteHeartIcon }
+              alt="White Heart Icon"
+              data-testid="favorite-btn"
+            />
+          </div>
         </div>
       </header>
 
-      <section>
+      <section className="recipe-details-ingredients">
         <h3>Ingredients</h3>
         <ul>
           {Array(ingredients).fill().map((_, index) => {
@@ -85,14 +93,14 @@ function FoodRecipeDetail({ match }) {
         </ul>
       </section>
 
-      <section>
+      <section className="recipe-details-instructions">
         <h3>Instructions</h3>
         <p data-testid="instructions">{ strInstructions }</p>
       </section>
 
       <section>
         <iframe
-          width="300"
+          width="100%"
           height="200"
           data-testid="video"
           src={ `https://www.youtube.com/embed/${videoYouTube}` }
@@ -102,24 +110,33 @@ function FoodRecipeDetail({ match }) {
         />
       </section>
 
-      <section>
+      <section className="carousel-section">
         <h3>Recommended</h3>
-        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
-          .map((recomendation, index) => {
-            const { strDrink, strDrinkThumb, idDrink } = recomendation;
-            return (
-              <RecomendationRecipeCard
-                key={ index }
-                name={ strDrink }
-                thumb={ strDrinkThumb }
-                id={ idDrink }
-                index={ index }
-              />
-            );
-          })}
+        <div className="carousel">
+          {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+            .map((recomendation, index) => {
+              const { strDrink, strDrinkThumb, idDrink } = recomendation;
+              return (
+                <RecomendationRecipeCard
+                  key={ index }
+                  name={ strDrink }
+                  thumb={ strDrinkThumb }
+                  id={ idDrink }
+                  index={ index }
+                />
+              );
+            })}
+        </div>
       </section>
 
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="recipe-details-button"
+      >
+        Start Recipe
+
+      </button>
     </>
   );
 }

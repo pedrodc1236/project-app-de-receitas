@@ -5,6 +5,7 @@ import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
+import '../RecipeDetails.css';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
@@ -41,30 +42,37 @@ function DrinkRecipeDetail({ match }) {
 
   return (
     <>
-      <header>
-        <div>
-          <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
-        </div>
+      <img
+        src={ strDrinkThumb }
+        alt={ strDrink }
+        data-testid="recipe-photo"
+        className="recipe-details-photo"
+      />
 
-        <div>
-          <h1 data-testid="recipe-title">{ strDrink }</h1>
+      <header className="recipe-details-header">
+        <h1 data-testid="recipe-title">{ strDrink }</h1>
+
+        <div className="recipe-details-info">
           <h5 data-testid="recipe-category">{ strAlcoholic}</h5>
-          <input
-            type="image"
-            src={ ShareIcon }
-            alt="Share Icon"
-            data-testid="share-btn"
-          />
-          <input
-            type="image"
-            src={ WhiteHeartIcon }
-            alt="White Heart Icon"
-            data-testid="favorite-btn"
-          />
+
+          <div className="recipe-details-icons">
+            <input
+              type="image"
+              src={ ShareIcon }
+              alt="Share Icon"
+              data-testid="share-btn"
+            />
+            <input
+              type="image"
+              src={ WhiteHeartIcon }
+              alt="White Heart Icon"
+              data-testid="favorite-btn"
+            />
+          </div>
         </div>
       </header>
 
-      <section>
+      <section className="recipe-details-ingredients">
         <h3>Ingredients</h3>
         <ul>
           {Array(ingredients).fill().map((_, index) => {
@@ -83,29 +91,38 @@ function DrinkRecipeDetail({ match }) {
         </ul>
       </section>
 
-      <section>
+      <section className="recipe-details-instructions">
         <h3>Instructions</h3>
         <p data-testid="instructions">{ strInstructions }</p>
       </section>
 
-      <section>
+      <section className="carousel-section">
         <h3>Recommended</h3>
-        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
-          .map((recomendation, index) => {
-            const { strMeal, strMealThumb, idMeal } = recomendation;
-            return (
-              <RecomendationRecipeCard
-                key={ index }
-                name={ strMeal }
-                thumb={ strMealThumb }
-                id={ idMeal }
-                index={ index }
-              />
-            );
-          })}
+        <div className="carousel">
+          {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+            .map((recomendation, index) => {
+              const { strMeal, strMealThumb, idMeal } = recomendation;
+              return (
+                <RecomendationRecipeCard
+                  key={ index }
+                  name={ strMeal }
+                  thumb={ strMealThumb }
+                  id={ idMeal }
+                  index={ index }
+                />
+              );
+            })}
+        </div>
       </section>
 
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="recipe-details-button"
+      >
+        Start Recipe
+
+      </button>
     </>
   );
 }
