@@ -31,3 +31,21 @@ export const fetchCocktailByIdAPI = async (id) => {
   const data = await request.json();
   return data;
 };
+
+export const cocktailFetchRandom = async () => {
+  const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+  const data = await request.json();
+  return data.drinks;
+};
+
+export const cocktailIngredientList = async () => {
+  const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
+  const data = await request.json();
+  return data.drinks;
+};
+
+export const FilterByIngredientDrinks = async (ingredient) => {
+  const request = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+  const data = await request.json();
+  return data;
+};

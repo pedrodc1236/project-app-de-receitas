@@ -4,20 +4,33 @@ import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
-import { fetchMealApi } from '../../services/requestsMealApi';
+import { fetchMealApi, filterByIngredient } from '../../services/requestsMealApi';
 
 const MAX_RECIPES_INDEX = 12;
 
 function Foods() {
-  const { mealsRecipes, setMealsRecipes } = useContext(AppContext);
+  const {
+    mealsRecipes,
+    setMealsRecipes,
+    accessFoods,
+    ingredientFoods,
+  } = useContext(AppContext);
 
   useEffect(() => {
     const getMealsRecipes = async () => {
       const response = await fetchMealApi();
       setMealsRecipes(response);
     };
-    getMealsRecipes();
-  }, [setMealsRecipes]);
+    const getByFilterIngredient = async () => {
+      const response = await filterByIngredient(ingredientFoods);
+      setMealsRecipes(response);
+    };
+    if (accessFoods) {
+      getByFilterIngredient();
+    } else {
+      getMealsRecipes();
+    }
+  }, [setMealsRecipes, accessFoods, ingredientFoods]);
 
   return (
     <>
