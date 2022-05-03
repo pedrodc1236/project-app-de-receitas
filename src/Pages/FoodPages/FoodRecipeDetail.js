@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailApi } from '../../services/requestsCocktailApi';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
+import arrowIcon from '../../images/arrowIcon.svg';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
@@ -15,6 +17,8 @@ function FoodRecipeDetail({ match }) {
   const [recomendations, setRecomendations] = useState();
 
   const { id } = match.params;
+  const history = useHistory();
+  const carousel = useRef(null);
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -37,6 +41,14 @@ function FoodRecipeDetail({ match }) {
     getMealById();
     getCocktailRecomendations();
   }, [id]);
+
+  const handleScroll = (direction) => {
+    if (direction === 'rigth') {
+      carousel.current.scrollLeft += carousel.current.offsetWidth;
+    } else {
+      carousel.current.scrollLeft -= carousel.current.offsetWidth;
+    }
+  };
 
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
 
@@ -101,7 +113,7 @@ function FoodRecipeDetail({ match }) {
       <section>
         <iframe
           width="100%"
-          height="200"
+          height="280"
           data-testid="video"
           src={ `https://www.youtube.com/embed/${videoYouTube}` }
           title="Recipe YouTube video player"
@@ -110,9 +122,9 @@ function FoodRecipeDetail({ match }) {
         />
       </section>
 
-      <section className="carousel-section">
+      <section>
         <h3>Recommended</h3>
-        <div className="carousel">
+        <div className="carousel" ref={ carousel }>
           {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
             .map((recomendation, index) => {
               const { strDrink, strDrinkThumb, idDrink } = recomendation;
@@ -127,12 +139,27 @@ function FoodRecipeDetail({ match }) {
               );
             })}
         </div>
+        <div className="carousel-buttons">
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to left"
+            onClick={ () => handleScroll('left') }
+          />
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to right"
+            onClick={ () => handleScroll('rigth') }
+          />
+        </div>
       </section>
 
       <button
         type="button"
         data-testid="start-recipe-btn"
         className="recipe-details-button"
+        onClick={ () => history.push(`/foods/${id}/in-progress`) }
       >
         Start Recipe
 

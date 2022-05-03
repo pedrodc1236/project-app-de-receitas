@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import ShareIcon from '../../images/shareIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
+import arrowIcon from '../../images/arrowIcon.svg';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
@@ -15,6 +17,8 @@ function DrinkRecipeDetail({ match }) {
   const [recomendations, setRecomendations] = useState();
 
   const { id } = match.params;
+  const history = useHistory();
+  const carousel = useRef(null);
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -37,6 +41,14 @@ function DrinkRecipeDetail({ match }) {
     getCocktailById();
     getMealRecomendations();
   }, [id]);
+
+  const handleScroll = (direction) => {
+    if (direction === 'right') {
+      carousel.current.scrollLeft += carousel.current.offsetWidth;
+    } else {
+      carousel.current.scrollLeft -= carousel.current.offsetWidth;
+    }
+  };
 
   const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
@@ -96,9 +108,9 @@ function DrinkRecipeDetail({ match }) {
         <p data-testid="instructions">{ strInstructions }</p>
       </section>
 
-      <section className="carousel-section">
+      <section>
         <h3>Recommended</h3>
-        <div className="carousel">
+        <div className="carousel" ref={ carousel }>
           {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
             .map((recomendation, index) => {
               const { strMeal, strMealThumb, idMeal } = recomendation;
@@ -113,12 +125,27 @@ function DrinkRecipeDetail({ match }) {
               );
             })}
         </div>
+        <div className="carousel-buttons">
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to left"
+            onClick={ () => handleScroll('left') }
+          />
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to right"
+            onClick={ () => handleScroll('right') }
+          />
+        </div>
       </section>
 
       <button
         type="button"
         data-testid="start-recipe-btn"
         className="recipe-details-button"
+        onClick={ () => history.push(`/drinks/${id}/in-progress`) }
       >
         Start Recipe
 
