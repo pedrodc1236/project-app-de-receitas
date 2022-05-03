@@ -13,6 +13,8 @@ function Provider({ children }) {
   const [arrayIngredientsDrinks, setArrayIngredientsDrinks] = useState([]);
   const [accessDrinks, setAccessDrinks] = useState(false);
   const [ingredientDrinks, setIngredientDrinks] = useState('');
+  const [nationalities, setNationalities] = useState([]);
+  const [apiNationality, setApiNationality] = useState({ meals: [] });
 
   const contextValue = {
     mealsRecipes,
@@ -35,6 +37,10 @@ function Provider({ children }) {
     setAccessDrinks,
     ingredientDrinks,
     setIngredientDrinks,
+    nationalities,
+    setNationalities,
+    apiNationality,
+    setApiNationality,
   };
 
   return (
