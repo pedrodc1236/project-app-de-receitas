@@ -8,17 +8,20 @@ import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
 import arrowIcon from '../../images/arrowIcon.svg';
+import Snackbar from '../../Components/Snackbar';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
+const THREE_SECONDS = 3000;
 
 function DrinkRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const { id } = match.params;
   const history = useHistory();
-  const carousel = useRef(null);
+  const carouselRef = useRef(null);
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -44,10 +47,18 @@ function DrinkRecipeDetail({ match }) {
 
   const handleScroll = (direction) => {
     if (direction === 'right') {
-      carousel.current.scrollLeft += carousel.current.offsetWidth;
+      carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
     } else {
-      carousel.current.scrollLeft -= carousel.current.offsetWidth;
+      carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
     }
+  };
+
+  const handleShareButton = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
+    setShowSnackbar(true);
+    setTimeout(() => {
+      setShowSnackbar(false);
+    }, THREE_SECONDS);
   };
 
   const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
@@ -73,7 +84,14 @@ function DrinkRecipeDetail({ match }) {
               src={ ShareIcon }
               alt="Share Icon"
               data-testid="share-btn"
+              onClick={ handleShareButton }
             />
+            <Snackbar
+              open={ showSnackbar }
+              onClose={ () => setShowSnackbar(false) }
+            >
+              Link copied!
+            </Snackbar>
             <input
               type="image"
               src={ WhiteHeartIcon }
@@ -110,7 +128,7 @@ function DrinkRecipeDetail({ match }) {
 
       <section>
         <h3>Recommended</h3>
-        <div className="carousel" ref={ carousel }>
+        <div className="carousel" ref={ carouselRef }>
           {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
             .map((recomendation, index) => {
               const { strMeal, strMealThumb, idMeal } = recomendation;
@@ -121,6 +139,7 @@ function DrinkRecipeDetail({ match }) {
                   thumb={ strMealThumb }
                   id={ idMeal }
                   index={ index }
+                  pageTitle="foods"
                 />
               );
             })}

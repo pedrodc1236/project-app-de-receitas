@@ -16,6 +16,10 @@ body {
   width: 100%;
 }
 
+.recipes-container {
+  margin-bottom: 40px;
+}
+
 .footer {
   background-color: white;
   bottom: 0;
