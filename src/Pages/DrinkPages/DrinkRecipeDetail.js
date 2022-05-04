@@ -70,6 +70,19 @@ function DrinkRecipeDetail({ match }) {
     return doneRecipes.some((doneRecipe) => doneRecipe.id === id);
   };
 
+  const changeButtonName = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      console.log('entrou no if');
+      return false;
+    }
+
+    const inProgressRecipes = Object.keys(
+      JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails,
+    );
+
+    return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
+  };
+
   const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
   return (
@@ -176,8 +189,7 @@ function DrinkRecipeDetail({ match }) {
           className="recipe-details-button"
           onClick={ () => history.push(`/drinks/${id}/in-progress`) }
         >
-          Start Recipe
-
+          { changeButtonName() ? 'Continue Recipe' : 'Start Recipe' }
         </button>
       )}
     </>

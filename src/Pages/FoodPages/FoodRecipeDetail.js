@@ -70,6 +70,19 @@ function FoodRecipeDetail({ match }) {
     return doneRecipes.some((doneRecipe) => doneRecipe.id === id);
   };
 
+  const changeButtonName = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      console.log('entrou no if');
+      return false;
+    }
+
+    const inProgressRecipes = Object.keys(
+      JSON.parse(localStorage.getItem('inProgressRecipes')).meals,
+    );
+
+    return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
+  };
+
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
 
   const videoYouTube = strYoutube?.split('=')[1];
@@ -190,8 +203,7 @@ function FoodRecipeDetail({ match }) {
           className="recipe-details-button"
           onClick={ () => history.push(`/foods/${id}/in-progress`) }
         >
-          Start Recipe
-
+          { changeButtonName() ? 'Continue Recipe' : 'Start Recipe' }
         </button>
       )}
     </>
