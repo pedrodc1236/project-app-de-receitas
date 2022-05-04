@@ -35,7 +35,6 @@ function ButtonsFilter({ title }) {
       }
     };
     apiPicker();
-    console.log('teste');
   }, [setArrayBtns, title]);
 
   const targetValueBtnCategory = async ({ target }) => {

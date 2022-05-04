@@ -61,6 +61,15 @@ function DrinkRecipeDetail({ match }) {
     }, THREE_SECONDS);
   };
 
+  const handleStartRecipeButton = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      return false;
+    }
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    return doneRecipes.some((doneRecipe) => doneRecipe.id === id);
+  };
+
   const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
   return (
@@ -160,15 +169,17 @@ function DrinkRecipeDetail({ match }) {
         </div>
       </section>
 
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="recipe-details-button"
-        onClick={ () => history.push(`/drinks/${id}/in-progress`) }
-      >
-        Start Recipe
+      {handleStartRecipeButton() ? null : (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipe-details-button"
+          onClick={ () => history.push(`/drinks/${id}/in-progress`) }
+        >
+          Start Recipe
 
-      </button>
+        </button>
+      )}
     </>
   );
 }

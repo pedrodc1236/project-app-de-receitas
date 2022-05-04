@@ -46,7 +46,7 @@ function FoodRecipeDetail({ match }) {
   }, [id]);
 
   const handleScroll = (direction) => {
-    if (direction === 'rigth') {
+    if (direction === 'right') {
       carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
     } else {
       carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
@@ -59,6 +59,15 @@ function FoodRecipeDetail({ match }) {
     setTimeout(() => {
       setShowSnackbar(false);
     }, THREE_SECONDS);
+  };
+
+  const handleStartRecipeButton = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      return false;
+    }
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    return doneRecipes.some((doneRecipe) => doneRecipe.id === id);
   };
 
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
@@ -169,20 +178,22 @@ function FoodRecipeDetail({ match }) {
             type="image"
             src={ arrowIcon }
             alt="Scroll to right"
-            onClick={ () => handleScroll('rigth') }
+            onClick={ () => handleScroll('right') }
           />
         </div>
       </section>
 
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="recipe-details-button"
-        onClick={ () => history.push(`/foods/${id}/in-progress`) }
-      >
-        Start Recipe
+      {handleStartRecipeButton() ? null : (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipe-details-button"
+          onClick={ () => history.push(`/foods/${id}/in-progress`) }
+        >
+          Start Recipe
 
-      </button>
+        </button>
+      )}
     </>
   );
 }
