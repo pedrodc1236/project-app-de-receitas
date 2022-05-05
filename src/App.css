@@ -52,14 +52,6 @@ body {
   width: 200px;
 }
 
-@media ( max-width : 360px ) {
-
-  .recipe-img {
-    height: 200px;
-    width: 200px;
-  }
-}
-
 /*
 #iceLeft {
   animation: clink .8s infinite ease;
