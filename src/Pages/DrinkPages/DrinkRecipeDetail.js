@@ -2,13 +2,17 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
+import Snackbar from '../../Components/Snackbar';
+import { checkDrinkFavoriteButton,
+  drinkFavoriteLocalStorage } from '../../Functions/handleFavoriteButton';
+import handleScroll from '../../Functions/handleScroll';
+import arrowIcon from '../../images/arrowIcon.svg';
 import ShareIcon from '../../images/shareIcon.svg';
+import BlackHeartIcon from '../../images/blackHeartIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
-import arrowIcon from '../../images/arrowIcon.svg';
-import Snackbar from '../../Components/Snackbar';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 const THREE_SECONDS = 3000;
@@ -18,10 +22,13 @@ function DrinkRecipeDetail({ match }) {
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = match.params;
   const history = useHistory();
   const carouselRef = useRef(null);
+
+  const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -36,6 +43,7 @@ function DrinkRecipeDetail({ match }) {
       const { drinks } = await fetchCocktailByIdAPI(id);
       setRecipe(drinks[0]);
       getRecipeIngredients(drinks[0]);
+      setIsFavorite(checkDrinkFavoriteButton(drinks[0]));
     };
     const getMealRecomendations = async () => {
       const { meals } = await fetchMealApi();
@@ -44,14 +52,6 @@ function DrinkRecipeDetail({ match }) {
     getCocktailById();
     getMealRecomendations();
   }, [id]);
-
-  const handleScroll = (direction) => {
-    if (direction === 'right') {
-      carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
-    } else {
-      carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
-    }
-  };
 
   const handleShareButton = () => {
     navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
@@ -72,7 +72,6 @@ function DrinkRecipeDetail({ match }) {
 
   const changeButtonName = () => {
     if (localStorage.getItem('inProgressRecipes') === null) {
-      console.log('entrou no if');
       return false;
     }
 
@@ -83,7 +82,10 @@ function DrinkRecipeDetail({ match }) {
     return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
   };
 
-  const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
+  const changeFavoriteButton = () => {
+    drinkFavoriteLocalStorage(recipe);
+    setIsFavorite((prevState) => !prevState);
+  };
 
   return (
     <>
@@ -116,9 +118,10 @@ function DrinkRecipeDetail({ match }) {
             </Snackbar>
             <input
               type="image"
-              src={ WhiteHeartIcon }
-              alt="White Heart Icon"
+              src={ isFavorite ? BlackHeartIcon : WhiteHeartIcon }
+              alt={ isFavorite ? 'Black Heart Icon' : 'White Heart Icon' }
               data-testid="favorite-btn"
+              onClick={ changeFavoriteButton }
             />
           </div>
         </div>
@@ -171,13 +174,13 @@ function DrinkRecipeDetail({ match }) {
             type="image"
             src={ arrowIcon }
             alt="Scroll to left"
-            onClick={ () => handleScroll('left') }
+            onClick={ () => handleScroll('left', carouselRef) }
           />
           <input
             type="image"
             src={ arrowIcon }
             alt="Scroll to right"
-            onClick={ () => handleScroll('right') }
+            onClick={ () => handleScroll('right', carouselRef) }
           />
         </div>
       </section>

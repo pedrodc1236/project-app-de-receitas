@@ -2,13 +2,17 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
+import Snackbar from '../../Components/Snackbar';
+import { checkFoodFavoriteButton,
+  foodFavoriteLocalStorage } from '../../Functions/handleFavoriteButton';
+import handleScroll from '../../Functions/handleScroll';
+import arrowIcon from '../../images/arrowIcon.svg';
 import ShareIcon from '../../images/shareIcon.svg';
+import BlackHeartIcon from '../../images/blackHeartIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailApi } from '../../services/requestsCocktailApi';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
-import arrowIcon from '../../images/arrowIcon.svg';
-import Snackbar from '../../Components/Snackbar';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 const THREE_SECONDS = 3000;
@@ -18,10 +22,15 @@ function FoodRecipeDetail({ match }) {
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = match.params;
   const history = useHistory();
   const carouselRef = useRef(null);
+
+  const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
+
+  const videoYouTube = strYoutube?.split('=')[1];
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -36,6 +45,7 @@ function FoodRecipeDetail({ match }) {
       const { meals } = await fetchMealByIdAPI(id);
       setRecipe(meals[0]);
       getRecipeIngredients(meals[0]);
+      setIsFavorite(checkFoodFavoriteButton(meals[0]));
     };
     const getCocktailRecomendations = async () => {
       const { drinks } = await fetchCocktailApi();
@@ -44,14 +54,6 @@ function FoodRecipeDetail({ match }) {
     getMealById();
     getCocktailRecomendations();
   }, [id]);
-
-  const handleScroll = (direction) => {
-    if (direction === 'right') {
-      carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
-    } else {
-      carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
-    }
-  };
 
   const handleShareButton = () => {
     navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
@@ -72,7 +74,6 @@ function FoodRecipeDetail({ match }) {
 
   const changeButtonName = () => {
     if (localStorage.getItem('inProgressRecipes') === null) {
-      console.log('entrou no if');
       return false;
     }
 
@@ -83,9 +84,10 @@ function FoodRecipeDetail({ match }) {
     return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
   };
 
-  const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
-
-  const videoYouTube = strYoutube?.split('=')[1];
+  const changeFavoriteButton = () => {
+    foodFavoriteLocalStorage(recipe);
+    setIsFavorite((prevState) => !prevState);
+  };
 
   return (
     <>
@@ -118,9 +120,10 @@ function FoodRecipeDetail({ match }) {
             </Snackbar>
             <input
               type="image"
-              src={ WhiteHeartIcon }
-              alt="White Heart Icon"
+              src={ isFavorite ? BlackHeartIcon : WhiteHeartIcon }
+              alt={ isFavorite ? 'Black Heart Icon' : 'White Heart Icon' }
               data-testid="favorite-btn"
+              onClick={ changeFavoriteButton }
             />
           </div>
         </div>
@@ -150,17 +153,15 @@ function FoodRecipeDetail({ match }) {
         <p data-testid="instructions">{ strInstructions }</p>
       </section>
 
-      <section>
-        <iframe
-          width="100%"
-          height="280"
-          data-testid="video"
-          src={ `https://www.youtube.com/embed/${videoYouTube}` }
-          title="Recipe YouTube video player"
-          frameBorder="0"
-          allowFullScreen
-        />
-      </section>
+      <iframe
+        width="100%"
+        height="280"
+        data-testid="video"
+        src={ `https://www.youtube.com/embed/${videoYouTube}` }
+        title="Recipe YouTube video player"
+        frameBorder="0"
+        allowFullScreen
+      />
 
       <section>
         <h3>Recommended</h3>
@@ -185,13 +186,13 @@ function FoodRecipeDetail({ match }) {
             type="image"
             src={ arrowIcon }
             alt="Scroll to left"
-            onClick={ () => handleScroll('left') }
+            onClick={ () => handleScroll('left', carouselRef) }
           />
           <input
             type="image"
             src={ arrowIcon }
             alt="Scroll to right"
-            onClick={ () => handleScroll('right') }
+            onClick={ () => handleScroll('right', carouselRef) }
           />
         </div>
       </section>
