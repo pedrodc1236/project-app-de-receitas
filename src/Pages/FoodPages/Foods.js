@@ -36,20 +36,22 @@ function Foods() {
     <>
       <Header title="Foods" />
       <ButtonsFilter title="Foods" />
-      {mealsRecipes?.meals.filter((_, index) => index < MAX_RECIPES_INDEX)
-        .map((recipe, index) => {
-          const { strMeal, strMealThumb, idMeal } = recipe;
-          return (
-            <RecipeCard
-              pageTitle="foods"
-              key={ index }
-              name={ strMeal }
-              thumb={ strMealThumb }
-              id={ idMeal }
-              index={ index }
-            />
-          );
-        })}
+      <div className="recipes-container">
+        {mealsRecipes?.meals.filter((_, index) => index < MAX_RECIPES_INDEX)
+          .map((recipe, index) => {
+            const { strMeal, strMealThumb, idMeal } = recipe;
+            return (
+              <RecipeCard
+                pageTitle="foods"
+                key={ index }
+                name={ strMeal }
+                thumb={ strMealThumb }
+                id={ idMeal }
+                index={ index }
+              />
+            );
+          })}
+      </div>
       <Footer />
     </>
   );

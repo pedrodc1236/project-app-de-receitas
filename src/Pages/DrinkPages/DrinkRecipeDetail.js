@@ -1,19 +1,34 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
+import Snackbar from '../../Components/Snackbar';
+import { checkDrinkFavoriteButton,
+  drinkFavoriteLocalStorage } from '../../Functions/handleFavoriteButton';
+import handleScroll from '../../Functions/handleScroll';
+import arrowIcon from '../../images/arrowIcon.svg';
 import ShareIcon from '../../images/shareIcon.svg';
+import BlackHeartIcon from '../../images/blackHeartIcon.svg';
 import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
+import '../RecipeDetails.css';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
+const THREE_SECONDS = 3000;
 
 function DrinkRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = match.params;
+  const history = useHistory();
+  const carouselRef = useRef(null);
+
+  const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
 
   const getRecipeIngredients = (recipeData) => {
     const recipeArray = Object.entries(recipeData);
@@ -28,6 +43,7 @@ function DrinkRecipeDetail({ match }) {
       const { drinks } = await fetchCocktailByIdAPI(id);
       setRecipe(drinks[0]);
       getRecipeIngredients(drinks[0]);
+      setIsFavorite(checkDrinkFavoriteButton(drinks[0]));
     };
     const getMealRecomendations = async () => {
       const { meals } = await fetchMealApi();
@@ -37,34 +53,81 @@ function DrinkRecipeDetail({ match }) {
     getMealRecomendations();
   }, [id]);
 
-  const { strDrinkThumb, strDrink, strAlcoholic, strInstructions } = recipe;
+  const handleShareButton = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
+    setShowSnackbar(true);
+    setTimeout(() => {
+      setShowSnackbar(false);
+    }, THREE_SECONDS);
+  };
+
+  const handleStartRecipeButton = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      return false;
+    }
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    return doneRecipes.some((doneRecipe) => doneRecipe.id === id);
+  };
+
+  const changeButtonName = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      return false;
+    }
+
+    const inProgressRecipes = Object.keys(
+      JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails,
+    );
+
+    return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
+  };
+
+  const changeFavoriteButton = () => {
+    drinkFavoriteLocalStorage(recipe);
+    setIsFavorite((prevState) => !prevState);
+  };
 
   return (
     <>
-      <header>
-        <div>
-          <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
-        </div>
+      <img
+        src={ strDrinkThumb }
+        alt={ strDrink }
+        data-testid="recipe-photo"
+        className="recipe-details-photo"
+      />
 
-        <div>
-          <h1 data-testid="recipe-title">{ strDrink }</h1>
+      <header className="recipe-details-header">
+        <h1 data-testid="recipe-title">{ strDrink }</h1>
+
+        <div className="recipe-details-info">
           <h5 data-testid="recipe-category">{ strAlcoholic}</h5>
-          <input
-            type="image"
-            src={ ShareIcon }
-            alt="Share Icon"
-            data-testid="share-btn"
-          />
-          <input
-            type="image"
-            src={ WhiteHeartIcon }
-            alt="White Heart Icon"
-            data-testid="favorite-btn"
-          />
+
+          <div className="recipe-details-icons">
+            <input
+              type="image"
+              src={ ShareIcon }
+              alt="Share Icon"
+              data-testid="share-btn"
+              onClick={ handleShareButton }
+            />
+            <Snackbar
+              open={ showSnackbar }
+              onClose={ () => setShowSnackbar(false) }
+            >
+              Link copied!
+            </Snackbar>
+            <input
+              type="image"
+              src={ isFavorite ? BlackHeartIcon : WhiteHeartIcon }
+              alt={ isFavorite ? 'Black Heart Icon' : 'White Heart Icon' }
+              data-testid="favorite-btn"
+              onClick={ changeFavoriteButton }
+            />
+          </div>
         </div>
       </header>
 
-      <section>
+      <section className="recipe-details-ingredients">
         <h3>Ingredients</h3>
         <ul>
           {Array(ingredients).fill().map((_, index) => {
@@ -83,29 +146,55 @@ function DrinkRecipeDetail({ match }) {
         </ul>
       </section>
 
-      <section>
+      <section className="recipe-details-instructions">
         <h3>Instructions</h3>
         <p data-testid="instructions">{ strInstructions }</p>
       </section>
 
       <section>
         <h3>Recommended</h3>
-        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
-          .map((recomendation, index) => {
-            const { strMeal, strMealThumb, idMeal } = recomendation;
-            return (
-              <RecomendationRecipeCard
-                key={ index }
-                name={ strMeal }
-                thumb={ strMealThumb }
-                id={ idMeal }
-                index={ index }
-              />
-            );
-          })}
+        <div className="carousel" ref={ carouselRef }>
+          {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+            .map((recomendation, index) => {
+              const { strMeal, strMealThumb, idMeal } = recomendation;
+              return (
+                <RecomendationRecipeCard
+                  key={ index }
+                  name={ strMeal }
+                  thumb={ strMealThumb }
+                  id={ idMeal }
+                  index={ index }
+                  pageTitle="foods"
+                />
+              );
+            })}
+        </div>
+        <div className="carousel-buttons">
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to left"
+            onClick={ () => handleScroll('left', carouselRef) }
+          />
+          <input
+            type="image"
+            src={ arrowIcon }
+            alt="Scroll to right"
+            onClick={ () => handleScroll('right', carouselRef) }
+          />
+        </div>
       </section>
 
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      {handleStartRecipeButton() ? null : (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipe-details-button"
+          onClick={ () => history.push(`/drinks/${id}/in-progress`) }
+        >
+          { changeButtonName() ? 'Continue Recipe' : 'Start Recipe' }
+        </button>
+      )}
     </>
   );
 }
