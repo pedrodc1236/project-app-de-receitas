@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
@@ -16,14 +15,13 @@ function DrinksIngredients({ history }) {
 
   const MAX_LENGTH = 12;
 
-  const apiRequest = async () => {
-    const apiIngredientDrinks = await cocktailIngredientList();
-    setArrayIngredientsDrinks(apiIngredientDrinks);
-  };
-
   useEffect(() => {
+    const apiRequest = async () => {
+      const apiIngredientDrinks = await cocktailIngredientList();
+      setArrayIngredientsDrinks(apiIngredientDrinks);
+    };
     apiRequest();
-  }, []);
+  }, [setArrayIngredientsDrinks]);
 
   const redirectFromDrinks = (param) => {
     setIngredientDrinks(param);

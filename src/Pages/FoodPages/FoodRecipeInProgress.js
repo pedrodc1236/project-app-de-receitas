@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
@@ -20,32 +19,31 @@ function FoodRecipeInProgress({ match }) {
     setIngredients(recipeIngredients.length);
   };
 
-  const progressLocalStorage = () => {
-    let recipeInProgress;
-    if (localStorage.getItem('inProgressRecipes') === null) {
-      recipeInProgress = {
-        cocktails: {},
-        meals: {},
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(recipeInProgress));
-    } else {
-      const getLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const result = getLocalStorage.meals[id];
-      setMealsLS(result || []);
-    }
-  };
-
-  const getLocalStorage = () => {
+  /* const getLocalStorage = () => {
     console.log(mealsLS);
   };
 
   useEffect(() => {
     getLocalStorage();
-  }, [mealsLS]);
+  }, [mealsLS]); */
 
   useEffect(() => {
+    const progressLocalStorage = () => {
+      let recipeInProgress;
+      if (localStorage.getItem('inProgressRecipes') === null) {
+        recipeInProgress = {
+          cocktails: {},
+          meals: {},
+        };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(recipeInProgress));
+      } else {
+        const getLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+        const result = getLocalStorage.meals[id];
+        setMealsLS(result || []);
+      }
+    };
     progressLocalStorage();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const getMealById = async () => {

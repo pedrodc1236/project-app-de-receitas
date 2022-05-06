@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
@@ -22,7 +21,8 @@ function FoodsNationalities({ history }) {
       setApiNationality(mealApiInicial);
     };
     getFilterByNationality();
-  }, []);
+    console.log('VAI EXPLODIIIIIIIIIR');
+  }, [setNationalities, setApiNationality]);
 
   const MAX_LENGTH = 12;
 
