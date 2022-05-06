@@ -52,6 +52,19 @@ body {
   width: 200px;
 }
 
+.img-progress {
+  height: 200px;
+  width: 200px;
+}
+
+.li-ingredient {
+  list-style-type: none;
+}
+
+.input-ingredient:checked + span {
+  text-decoration: line-through;
+}
+
 @media ( max-width : 360px ) {
 
   .recipe-img {
