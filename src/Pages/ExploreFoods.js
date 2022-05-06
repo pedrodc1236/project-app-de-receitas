@@ -21,7 +21,7 @@ function ExploreFoods({ history }) {
 
   return (
     <>
-      <Header title="ExploreFoods" />
+      <Header title="Explore Foods" />
       <div>
         <button
           type="button"

@@ -42,7 +42,7 @@ function FoodsNationalities({ history }) {
 
   return (
     <>
-      <Header title="FoodsNationalities" />
+      <Header title="Explore Nationalities" />
       <select
         data-testid="explore-by-nationality-dropdown"
         onChange={ onChangeOption }

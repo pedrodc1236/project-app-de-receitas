@@ -4,7 +4,7 @@ import Header from '../Components/Header';
 function DoneRecipes() {
   return (
     <>
-      <Header title="DoneRecipes" />
+      <Header title="Done Recipes" />
       <h2>Tela de Receitas feitas</h2>
     </>
   );

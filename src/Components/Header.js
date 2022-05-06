@@ -5,6 +5,8 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import HeaderSearchBar from './HeaderSearchBar';
 
+const needsSearchBtn = ['Foods', 'Drinks', 'Explore Nationalities'];
+
 function Header({ title }) {
   const [showSearchInput, setShowSearchInput] = useState(false);
 
@@ -27,13 +29,13 @@ function Header({ title }) {
 
         <h1 data-testid="page-title">{ title }</h1>
 
-        <input
+        { needsSearchBtn.includes(title) ? <input
           type="image"
           alt="Search Icon"
           data-testid="search-top-btn"
           src={ searchIcon }
           onClick={ () => setShowSearchInput(!showSearchInput) }
-        />
+        /> : <span /> }
       </div>
 
       { showSearchInput
