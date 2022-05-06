@@ -8,7 +8,7 @@ import { fetchMealByIdAPI } from '../../services/requestsMealApi';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 
-function FoodRecipeDetail({ match }) {
+function FoodRecipeDetail({ match, history }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
@@ -40,6 +40,10 @@ function FoodRecipeDetail({ match }) {
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
 
   const videoYouTube = strYoutube?.split('=')[1];
+
+  const onRedirectRecipesProgress = () => {
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   return (
     <>
@@ -119,7 +123,13 @@ function FoodRecipeDetail({ match }) {
           })}
       </section>
 
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        onClick={ onRedirectRecipesProgress }
+      >
+        Start Recipe
+      </button>
     </>
   );
 }
@@ -130,6 +140,9 @@ FoodRecipeDetail.propTypes = {
     params: PropTypes.objectOf(PropTypes.string).isRequired,
     path: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
