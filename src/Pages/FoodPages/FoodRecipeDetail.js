@@ -17,7 +17,7 @@ import '../RecipeDetails.css';
 const MAX_RECOMENDATIONS_INDEX = 6;
 const THREE_SECONDS = 3000;
 
-function FoodRecipeDetail({ match, history }) {
+function FoodRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState();
@@ -87,10 +87,6 @@ function FoodRecipeDetail({ match, history }) {
   const changeFavoriteButton = () => {
     foodFavoriteLocalStorage(recipe);
     setIsFavorite((prevState) => !prevState);
-  };
-
-  const onRedirectRecipesProgress = () => {
-    history.push(`/foods/${id}/in-progress`);
   };
 
   return (
@@ -221,9 +217,6 @@ FoodRecipeDetail.propTypes = {
     params: PropTypes.objectOf(PropTypes.string).isRequired,
     path: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

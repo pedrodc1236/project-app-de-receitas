@@ -16,12 +16,11 @@ function FoodsIngredients({ history }) {
 
   const MAX_LENGTH = 12;
 
-  const apiRequest = async () => {
-    const apiIngredientFoods = await mealIngredientsApi();
-    setArrayIngredientsFoods(apiIngredientFoods);
-  };
-
   useEffect(() => {
+    const apiRequest = async () => {
+      const apiIngredientFoods = await mealIngredientsApi();
+      setArrayIngredientsFoods(apiIngredientFoods);
+    };
     apiRequest();
   }, []);
 
