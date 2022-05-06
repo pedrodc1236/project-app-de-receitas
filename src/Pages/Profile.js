@@ -12,9 +12,7 @@ function Profile({ history }) {
   };
 
   const onClickLogout = () => {
-    localStorage.removeItem('mealsToken');
-    localStorage.removeItem('cocktailsToken');
-    localStorage.removeItem('user');
+    localStorage.clear();
     history.push('/');
   };
 
