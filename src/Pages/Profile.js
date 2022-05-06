@@ -4,7 +4,13 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
 function Profile({ history }) {
-  const HandleLocalStorage = () => JSON.parse(localStorage.getItem('user')).email;
+  const HandleLocalStorage = () => {
+    if (localStorage.getItem('user') === null) {
+      return 'Email não fornecido :(';
+    }
+    return JSON.parse(localStorage.getItem('user')).email;
+  };
+
   const onClickLogout = () => {
     localStorage.removeItem('mealsToken');
     localStorage.removeItem('cocktailsToken');

@@ -37,20 +37,22 @@ function Drinks() {
     <>
       <Header title="Drinks" />
       <ButtonsFilter title="Drinks" />
-      {drinksRecipes?.drinks.filter((_, index) => index < MAX_RECIPES_INDEX)
-        .map((recipe, index) => {
-          const { strDrink, strDrinkThumb, idDrink } = recipe;
-          return (
-            <RecipeCard
-              pageTitle="drinks"
-              key={ index }
-              name={ strDrink }
-              thumb={ strDrinkThumb }
-              id={ idDrink }
-              index={ index }
-            />
-          );
-        })}
+      <div className="recipes-container">
+        {drinksRecipes?.drinks.filter((_, index) => index < MAX_RECIPES_INDEX)
+          .map((recipe, index) => {
+            const { strDrink, strDrinkThumb, idDrink } = recipe;
+            return (
+              <RecipeCard
+                pageTitle="drinks"
+                key={ index }
+                name={ strDrink }
+                thumb={ strDrinkThumb }
+                id={ idDrink }
+                index={ index }
+              />
+            );
+          })}
+      </div>
       <Footer />
     </>
   );

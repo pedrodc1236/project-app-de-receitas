@@ -24,21 +24,19 @@ function ButtonsFilter({ title }) {
   } = useContext(AppContext);
 
   const MAX_BTNS = 5;
-
-  const apiPicker = async () => {
-    if (title === 'Foods') {
-      const apiReturn = await mealCategoryRequest();
-      setArrayBtns(apiReturn);
-    }
-    if (title === 'Drinks') {
-      const apiReturn = await cocktailCategoryRequest();
-      setArrayBtns(apiReturn);
-    }
-  };
-
   useEffect(() => {
+    const apiPicker = async () => {
+      if (title === 'Foods') {
+        const apiReturn = await mealCategoryRequest();
+        setArrayBtns(apiReturn);
+      }
+      if (title === 'Drinks') {
+        const apiReturn = await cocktailCategoryRequest();
+        setArrayBtns(apiReturn);
+      }
+    };
     apiPicker();
-  }, []);
+  }, [setArrayBtns, title]);
 
   const targetValueBtnCategory = async ({ target }) => {
     if (title === 'Foods') {
