@@ -3,8 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecomendationRecipeCard from '../../Components/RecomendationRecipeCard';
 import Snackbar from '../../Components/Snackbar';
-import { checkFoodFavoriteButton,
-  foodFavoriteLocalStorage } from '../../Functions/handleFavoriteButton';
+import { checkFavoriteButton,
+  removeEqualFavorite,
+  favoriteLocalStorage } from '../../Functions/handleFavoriteButton';
 import handleScroll from '../../Functions/handleScroll';
 import arrowIcon from '../../images/arrowIcon.svg';
 import ShareIcon from '../../images/shareIcon.svg';
@@ -45,7 +46,7 @@ function FoodRecipeDetail({ match }) {
       const { meals } = await fetchMealByIdAPI(id);
       setRecipe(meals[0]);
       getRecipeIngredients(meals[0]);
-      setIsFavorite(checkFoodFavoriteButton(meals[0]));
+      setIsFavorite(checkFavoriteButton(meals[0], 'Meal'));
     };
     const getCocktailRecomendations = async () => {
       const { drinks } = await fetchCocktailApi();
@@ -84,8 +85,12 @@ function FoodRecipeDetail({ match }) {
     return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
   };
 
-  const changeFavoriteButton = () => {
-    foodFavoriteLocalStorage(recipe);
+  const handleFavoriteButton = () => {
+    if (isFavorite) {
+      removeEqualFavorite(id);
+    } else {
+      favoriteLocalStorage(recipe, 'Meal');
+    }
     setIsFavorite((prevState) => !prevState);
   };
 
@@ -123,7 +128,7 @@ function FoodRecipeDetail({ match }) {
               src={ isFavorite ? BlackHeartIcon : WhiteHeartIcon }
               alt={ isFavorite ? 'Black Heart Icon' : 'White Heart Icon' }
               data-testid="favorite-btn"
-              onClick={ changeFavoriteButton }
+              onClick={ handleFavoriteButton }
             />
           </div>
         </div>
