@@ -15,10 +15,19 @@ function Favorites() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   console.log(favoriteRecipes);
 
+  if (favoriteRecipes === null) {
+    return (
+      <>
+        <Header title="Favorite Recipes" />
+        <h4>Você ainda não favoritou nenhuma receita</h4>
+      </>
+
+    );
+  }
+
   return (
     <>
-      <Header title="Favorites" />
-      <h2>Your Favorite Recipes</h2>
+      <Header title="Favorite Recipes" />
       <div>
         <button
           type="button"

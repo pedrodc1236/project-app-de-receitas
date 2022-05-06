@@ -33,7 +33,7 @@ function FoodsIngredients({ history }) {
 
   return (
     <>
-      <Header title="FoodsIngredients" />
+      <Header title="Explore Ingredients" />
       { arrayIngredientsFoods.map((el, index) => (
         index < MAX_LENGTH
         && (
