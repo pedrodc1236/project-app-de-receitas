@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
@@ -22,7 +21,7 @@ function FoodsIngredients({ history }) {
       setArrayIngredientsFoods(apiIngredientFoods);
     };
     apiRequest();
-  }, []);
+  }, [setArrayIngredientsFoods]);
 
   const redirectFromFoods = (param) => {
     setIngredientFoods(param);
