@@ -4,11 +4,9 @@ import React, { useEffect, useState,
 import { useHistory } from 'react-router-dom';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
-
 import RecipeHeader from '../../Components/RecipeHeader';
 import RecipeDetailsIngredients from '../../Components/RecipeDetailsIngredients';
 import Loading from '../../Components/Loading';
-
 import AppContext from '../../context/AppContext';
 import RecipeInstructions from '../../Components/RecipeInstructions';
 import RecipeCarousel from '../../Components/RecipeCarousel';
