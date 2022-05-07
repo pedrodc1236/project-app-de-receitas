@@ -31,3 +31,33 @@ export const fetchMealByIdAPI = async (id) => {
   const data = await request.json();
   return data;
 };
+
+export const mealFetchRandom = async () => {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+  const data = await request.json();
+  return data.meals;
+};
+
+export const mealIngredientsApi = async () => {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+  const data = await request.json();
+  return data.meals;
+};
+
+export const filterByIngredient = async (ingredient) => {
+  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+  const data = await request.json();
+  return data;
+};
+
+export const filterByNationality = async () => {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const data = await request.json();
+  return data.meals;
+};
+
+export const filterByEachNationality = async (nationality) => {
+  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${nationality}`);
+  const data = await request.json();
+  return data;
+};

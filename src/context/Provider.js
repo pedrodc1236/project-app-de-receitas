@@ -7,6 +7,14 @@ function Provider({ children }) {
   const [drinksRecipes, setDrinksRecipes] = useState();
   const [arrayBtns, setArrayBtns] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('');
+  const [arrayIngredientsFoods, setArrayIngredientsFoods] = useState([]);
+  const [accessFoods, setAccessFoods] = useState(false);
+  const [ingredientFoods, setIngredientFoods] = useState('');
+  const [arrayIngredientsDrinks, setArrayIngredientsDrinks] = useState([]);
+  const [accessDrinks, setAccessDrinks] = useState(false);
+  const [ingredientDrinks, setIngredientDrinks] = useState('');
+  const [nationalities, setNationalities] = useState([]);
+  const [apiNationality, setApiNationality] = useState({ meals: [] });
 
   const contextValue = {
     mealsRecipes,
@@ -17,6 +25,22 @@ function Provider({ children }) {
     setArrayBtns,
     selectedFilter,
     setSelectedFilter,
+    arrayIngredientsFoods,
+    setArrayIngredientsFoods,
+    accessFoods,
+    setAccessFoods,
+    ingredientFoods,
+    setIngredientFoods,
+    arrayIngredientsDrinks,
+    setArrayIngredientsDrinks,
+    accessDrinks,
+    setAccessDrinks,
+    ingredientDrinks,
+    setIngredientDrinks,
+    nationalities,
+    setNationalities,
+    apiNationality,
+    setApiNationality,
   };
 
   return (

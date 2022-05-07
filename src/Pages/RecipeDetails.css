@@ -1,5 +1,12 @@
 .recipe-details-photo {
-  width: 100%;
+  width: 30%;
+}
+
+@media ( max-width : 360px ) {
+
+  .recipe-details-photo {
+    width: 100%;
+  }
 }
 
 .recipe-details-info {
