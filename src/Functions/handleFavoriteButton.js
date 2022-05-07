@@ -22,9 +22,9 @@ export const favoriteLocalStorage = (recipe, type) => {
 export const checkFavoriteButton = (recipe, type) => {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-  return favoriteRecipes?.some((favRecipe) => favRecipe.id === recipe[`id${
-    type
-  }`]);
+  const id = recipe[`id${type}`];
+
+  return favoriteRecipes?.some((favRecipe) => favRecipe.id === id);
 };
 
 export const removeEqualFavorite = (id) => {
