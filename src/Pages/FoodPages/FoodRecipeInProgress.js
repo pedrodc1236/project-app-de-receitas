@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
+import React, { useEffect, useState,
+  useContext } from 'react';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
-import ShareIcon from '../../images/shareIcon.svg';
-import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import '../RecipeDetails.css';
+import RecipeHeader from '../../Components/RecipeHeader';
+import Loading from '../../Components/Loading';
+import AppContext from '../../context/AppContext';
+import RecipeInstructions from '../../Components/RecipeInstructions';
+
+const HALF_SECOND = 500;
 
 function FoodRecipeInProgress({ match }) {
-  const [recipe, setRecipe] = useState('');
+  const { recipe, setRecipe } = useContext(AppContext);
   const [ingredients, setIngredients] = useState([]);
   const [mealsLS, setMealsLS] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { id } = match.params;
 
@@ -52,9 +60,11 @@ function FoodRecipeInProgress({ match }) {
       getRecipeIngredients(meals[0]);
     };
     getMealById();
+    // getRecipeIngredients(recipe);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [id]);
-
-  const { strMealThumb, strMeal, strCategory, strInstructions } = recipe;
 
   const localStorageChecked = ({ target }, param) => {
     const localStorageMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -85,34 +95,21 @@ function FoodRecipeInProgress({ match }) {
     }
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const { strMealThumb, strMeal } = recipe;
+
   return (
     <>
-      <section>
-        <div>
-          <img
-            src={ strMealThumb }
-            alt={ strMeal }
-            data-testid="recipe-photo"
-          />
-        </div>
+      <img
+        src={ strMealThumb }
+        alt={ strMeal }
+        data-testid="recipe-photo"
+      />
 
-        <div>
-          <h1 data-testid="recipe-title">{ strMeal }</h1>
-          <h5 data-testid="recipe-category">{ strCategory}</h5>
-          <input
-            type="image"
-            src={ ShareIcon }
-            alt="Share Icon"
-            data-testid="share-btn"
-          />
-          <input
-            type="image"
-            src={ WhiteHeartIcon }
-            alt="White Heart Icon"
-            data-testid="favorite-btn"
-          />
-        </div>
-      </section>
+      <RecipeHeader type="Meal" />
 
       <section>
         <h3>Ingredients</h3>
@@ -140,10 +137,7 @@ function FoodRecipeInProgress({ match }) {
         </ul>
       </section>
 
-      <section>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{ strInstructions }</p>
-      </section>
+      <RecipeInstructions />
 
       <button
         type="button"

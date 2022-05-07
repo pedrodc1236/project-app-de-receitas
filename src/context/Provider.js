@@ -15,6 +15,7 @@ function Provider({ children }) {
   const [ingredientDrinks, setIngredientDrinks] = useState('');
   const [nationalities, setNationalities] = useState([]);
   const [apiNationality, setApiNationality] = useState({ meals: [] });
+  const [recipe, setRecipe] = useState('');
 
   const contextValue = {
     mealsRecipes,
@@ -41,6 +42,8 @@ function Provider({ children }) {
     setNationalities,
     apiNationality,
     setApiNationality,
+    recipe,
+    setRecipe,
   };
 
   return (
