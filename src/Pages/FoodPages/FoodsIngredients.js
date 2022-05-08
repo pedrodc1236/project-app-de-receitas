@@ -1,9 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import { mealIngredientsApi } from '../../services/requestsMealApi';
 import AppContext from '../../context/AppContext';
+import Loading from '../../Components/Loading';
+
+const HALF_SECOND = 500;
+const MAX_LENGTH = 12;
 
 function FoodsIngredients({ history }) {
   const {
@@ -13,7 +17,7 @@ function FoodsIngredients({ history }) {
     setIngredientFoods,
   } = useContext(AppContext);
 
-  const MAX_LENGTH = 12;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const apiRequest = async () => {
@@ -21,6 +25,9 @@ function FoodsIngredients({ history }) {
       setArrayIngredientsFoods(apiIngredientFoods);
     };
     apiRequest();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [setArrayIngredientsFoods]);
 
   const redirectFromFoods = (param) => {
@@ -29,6 +36,9 @@ function FoodsIngredients({ history }) {
     history.push('/foods');
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Explore Ingredients" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import ShareIcon from '../images/shareIcon.svg';
@@ -6,15 +6,27 @@ import Snackbar from '../Components/Snackbar';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 // import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../services/Favorites.css';
+import Loading from '../Components/Loading';
 
 const THREE_SECONDS = 3000;
+const HALF_SECOND = 500;
 
 function Favorites() {
+  const [isLoading, setIsLoading] = useState(true);
   const [showSnackbar, setShowSnackbar] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
+  }, []);
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   console.log(favoriteRecipes);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   if (favoriteRecipes === null) {
     return (
       <>

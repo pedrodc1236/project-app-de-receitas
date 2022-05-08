@@ -1,9 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import { cocktailIngredientList } from '../../services/requestsCocktailApi';
 import AppContext from '../../context/AppContext';
+import Loading from '../../Components/Loading';
+
+const MAX_LENGTH = 12;
+const HALF_SECOND = 500;
 
 function DrinksIngredients({ history }) {
   const {
@@ -13,7 +17,7 @@ function DrinksIngredients({ history }) {
     setIngredientDrinks,
   } = useContext(AppContext);
 
-  const MAX_LENGTH = 12;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const apiRequest = async () => {
@@ -21,6 +25,9 @@ function DrinksIngredients({ history }) {
       setArrayIngredientsDrinks(apiIngredientDrinks);
     };
     apiRequest();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [setArrayIngredientsDrinks]);
 
   const redirectFromDrinks = (param) => {
@@ -29,6 +36,9 @@ function DrinksIngredients({ history }) {
     history.push('/drinks');
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Explore Ingredients" />

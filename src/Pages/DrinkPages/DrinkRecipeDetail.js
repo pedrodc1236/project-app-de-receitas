@@ -14,9 +14,11 @@ import WhiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 import { fetchMealApi } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
+import Loading from '../../Components/Loading';
 
 const MAX_RECOMENDATIONS_INDEX = 6;
 const THREE_SECONDS = 3000;
+const HALF_SECOND = 500;
 
 function DrinkRecipeDetail({ match }) {
   const [recipe, setRecipe] = useState('');
@@ -24,6 +26,7 @@ function DrinkRecipeDetail({ match }) {
   const [recomendations, setRecomendations] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { id } = match.params;
   const history = useHistory();
@@ -52,6 +55,9 @@ function DrinkRecipeDetail({ match }) {
     };
     getCocktailById();
     getMealRecomendations();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [id]);
 
   const handleShareButton = () => {
@@ -92,6 +98,9 @@ function DrinkRecipeDetail({ match }) {
     setIsFavorite((prevState) => !prevState);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <img
