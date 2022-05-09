@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import { filterByNationality,
   filterByEachNationality, fetchMealApi } from '../../services/requestsMealApi';
 import AppContext from '../../context/AppContext';
+import Loading from '../../Components/Loading';
+
+const HALF_SECOND = 500;
+const MAX_LENGTH = 12;
 
 function FoodsNationalities({ history }) {
   const {
@@ -13,6 +17,9 @@ function FoodsNationalities({ history }) {
     apiNationality,
     setApiNationality,
   } = useContext(AppContext);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const getFilterByNationality = async () => {
       const getNationalities = await filterByNationality();
@@ -21,10 +28,10 @@ function FoodsNationalities({ history }) {
       setApiNationality(mealApiInicial);
     };
     getFilterByNationality();
-    console.log('VAI EXPLODIIIIIIIIIR');
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [setNationalities, setApiNationality]);
-
-  const MAX_LENGTH = 12;
 
   const onChangeOption = async ({ target }) => {
     if (target.value !== 'All') {
@@ -40,6 +47,9 @@ function FoodsNationalities({ history }) {
     history.push(`/foods/${id}`);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Explore Nationalities" />

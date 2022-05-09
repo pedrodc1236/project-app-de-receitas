@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ButtonsFilter from '../../Components/ButtonsFilter';
 import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
-import { fetchMealApi, filterByIngredient } from '../../services/requestsMealApi';
+import { fetchMealApi, filterByIngredientMeal } from '../../services/requestsMealApi';
+import Loading from '../../Components/Loading';
 
 const MAX_RECIPES_INDEX = 12;
+const HALF_SECOND = 500;
 
 function Foods() {
   const {
@@ -16,13 +18,15 @@ function Foods() {
     ingredientFoods,
   } = useContext(AppContext);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const getMealsRecipes = async () => {
       const response = await fetchMealApi();
       setMealsRecipes(response);
     };
     const getByFilterIngredient = async () => {
-      const response = await filterByIngredient(ingredientFoods);
+      const response = await filterByIngredientMeal(ingredientFoods);
       setMealsRecipes(response);
     };
     if (accessFoods) {
@@ -30,8 +34,14 @@ function Foods() {
     } else {
       getMealsRecipes();
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
   }, [setMealsRecipes, accessFoods, ingredientFoods]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Foods" />

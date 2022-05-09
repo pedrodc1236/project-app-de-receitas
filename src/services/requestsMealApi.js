@@ -1,63 +1,89 @@
+const urlBase = 'https://www.themealdb.com/api/json/v1/1/';
+
 export const fetchMealApi = async (radio, inputName) => {
-  let request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  let url = urlBase;
 
   if (radio === 'Ingredient') {
-    request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputName}`);
+    url += `filter.php?i=${inputName}`;
+  } else if (radio === 'Name') {
+    url += `search.php?s=${inputName}`;
+  } else if (radio === 'First letter') {
+    url += `search.php?f=${inputName}`;
   }
-  if (radio === 'Name') {
-    request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputName}`);
-  }
-  if (radio === 'First letter') {
-    request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputName}`);
-  }
+
+  const request = await fetch(url);
   const data = await request.json();
   return data;
 };
 
 export const mealCategoryRequest = async () => {
-  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  let url = urlBase;
+  url += 'list.php?c=list';
+
+  const request = await fetch(url);
   const data = await request.json();
   return data.meals;
 };
 
 export const mealRequestForCategoryBtn = async (category) => {
-  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+  let url = urlBase;
+  url += `filter.php?c=${category}`;
+
+  const request = await fetch(url);
   const data = await request.json();
   return data;
 };
 
 export const fetchMealByIdAPI = async (id) => {
-  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  let url = urlBase;
+  url += `lookup.php?i=${id}`;
+
+  const request = await fetch(url);
   const data = await request.json();
   return data;
 };
 
 export const mealFetchRandom = async () => {
-  const request = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+  let url = urlBase;
+  url += 'random.php';
+
+  const request = await fetch(url);
   const data = await request.json();
   return data.meals;
 };
 
-export const mealIngredientsApi = async () => {
-  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+export const mealIngredientsList = async () => {
+  let url = urlBase;
+  url += 'list.php?i=list';
+
+  const request = await fetch(url);
   const data = await request.json();
   return data.meals;
 };
 
-export const filterByIngredient = async (ingredient) => {
-  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+export const filterByIngredientMeal = async (ingredient) => {
+  let url = urlBase;
+  url += `filter.php?i=${ingredient}`;
+
+  const request = await fetch(url);
   const data = await request.json();
   return data;
 };
 
 export const filterByNationality = async () => {
-  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  let url = urlBase;
+  url += 'list.php?a=list';
+
+  const request = await fetch(url);
   const data = await request.json();
   return data.meals;
 };
 
 export const filterByEachNationality = async (nationality) => {
-  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${nationality}`);
+  let url = urlBase;
+  url += `filter.php?a=${nationality}`;
+
+  const request = await fetch(url);
   const data = await request.json();
   return data;
 };

@@ -1,20 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState,
-  useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { checkFavoriteButton,
-  // removeEqualFavorite,
-  // favoriteLocalStorage,
-} from '../../Functions/handleFavoriteButton';
-// import { fetchCocktailApi } from '../../services/requestsCocktailApi';
 import { fetchMealByIdAPI } from '../../services/requestsMealApi';
 import '../RecipeDetails.css';
 import RecipeHeader from '../../Components/RecipeHeader';
 import RecipeDetailsIngredients from '../../Components/RecipeDetailsIngredients';
 import Loading from '../../Components/Loading';
-import AppContext from '../../context/AppContext';
 import RecipeInstructions from '../../Components/RecipeInstructions';
 import RecipeCarousel from '../../Components/RecipeCarousel';
+import AppContext from '../../context/AppContext';
 
 const HALF_SECOND = 500;
 
@@ -30,13 +24,7 @@ function FoodRecipeDetail({ match }) {
     const getMealById = async () => {
       const { meals } = await fetchMealByIdAPI(id);
       setRecipe(meals[0]);
-      getRecipeIngredients(meals[0]);
-      setIsFavorite(checkFavoriteButton(meals[0], 'Meal'));
     };
-    // const getCocktailRecomendations = async () => {
-    //   const { drinks } = await fetchCocktailApi();
-    //   setRecomendations(drinks);
-    // };
     getMealById();
     setTimeout(() => {
       setIsLoading(false);
@@ -64,20 +52,10 @@ function FoodRecipeDetail({ match }) {
     return inProgressRecipes.some((inProgressRecipe) => inProgressRecipe === id);
   };
 
-  // const handleFavoriteButton = () => {
-  //   if (isFavorite) {
-  //     removeEqualFavorite(id);
-  //   } else {
-  //     favoriteLocalStorage(recipe, 'Meal');
-  //   }
-  //   setIsFavorite((prevState) => !prevState);
-  // };
   if (isLoading) {
     return <Loading />;
   }
-  const { strMealThumb,
-    strMeal,
-    strYoutube } = recipe;
+  const { strMealThumb, strMeal, strYoutube } = recipe;
 
   const videoYouTube = strYoutube?.split('=')[1];
 

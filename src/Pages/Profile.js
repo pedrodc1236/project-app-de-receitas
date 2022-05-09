@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import Loading from '../Components/Loading';
+
+const HALF_SECOND = 500;
 
 function Profile({ history }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
+  }, []);
+
   const HandleLocalStorage = () => {
     if (localStorage.getItem('user') === null) {
       return 'Email não fornecido :(';
@@ -16,6 +27,9 @@ function Profile({ history }) {
     history.push('/');
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Profile" />

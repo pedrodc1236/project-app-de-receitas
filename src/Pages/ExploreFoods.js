@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { mealFetchRandom } from '../services/requestsMealApi';
+import Loading from '../Components/Loading';
+
+const HALF_SECOND = 500;
 
 function ExploreFoods({ history }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, HALF_SECOND);
+  }, []);
+
   const redirectForIngredientExplore = () => {
     history.push('/explore/foods/ingredients');
   };
@@ -19,6 +30,9 @@ function ExploreFoods({ history }) {
     history.push(`/foods/${id}`);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header title="Explore Foods" />
