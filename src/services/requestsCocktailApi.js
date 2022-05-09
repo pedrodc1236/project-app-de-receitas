@@ -6,15 +6,14 @@ export const fetchCocktailApi = async (radio, inputName) => {
   if (radio === 'Ingredient') {
     url += `filter.php?i=${inputName}`;
   } else if (radio === 'Name') {
-    url += `filter.php?s=${inputName}`;
+    url += `search.php?s=${inputName}`;
   } else if (radio === 'First letter') {
     url += `search.php?f=${inputName}`;
   } else {
-    url += 'filter.php?s=';
+    url += 'search.php?s=';
   }
 
   const request = await fetch(url);
-
   const data = await request.json();
   return data;
 };

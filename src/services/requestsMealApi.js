@@ -13,8 +13,6 @@ export const fetchMealApi = async (radio, inputName) => {
     url += 'search.php?s=';
   }
 
-  console.log(url);
-
   const request = await fetch(url);
   const data = await request.json();
   return data;
