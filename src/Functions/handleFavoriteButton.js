@@ -33,4 +33,6 @@ export const removeEqualFavorite = (id) => {
   const removeFavoriteRecipe = favoriteRecipes.filter((recipe) => recipe.id !== id);
 
   localStorage.setItem('favoriteRecipes', JSON.stringify(removeFavoriteRecipe));
+
+  return removeFavoriteRecipe;
 };
