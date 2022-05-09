@@ -4,9 +4,9 @@ import Header from '../Components/Header';
 import ShareIcon from '../images/shareIcon.svg';
 import Snackbar from '../Components/Snackbar';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
-// import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../services/Favorites.css';
 import Loading from '../Components/Loading';
+import { removeEqualFavorite } from '../Functions/handleFavoriteButton';
 
 const THREE_SECONDS = 3000;
 const HALF_SECOND = 500;
@@ -14,20 +14,22 @@ const HALF_SECOND = 500;
 function Favorites() {
   const [isLoading, setIsLoading] = useState(true);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, HALF_SECOND);
+    const getFavoriteRecipes = () => {
+      setFavoriteRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
+    };
+    getFavoriteRecipes();
   }, []);
-
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(favoriteRecipes);
 
   if (isLoading) {
     return <Loading />;
   }
-  if (favoriteRecipes === null) {
+  if (favoriteRecipes === null || favoriteRecipes.length === 0) {
     return (
       <>
         <Header title="Favorite Recipes" />
@@ -37,6 +39,22 @@ function Favorites() {
     );
   }
 
+  const removeFavorites = (id) => {
+    setFavoriteRecipes(removeEqualFavorite(id));
+  };
+
+  const filterFavorites = ({ value }) => {
+    const favoriteRecipesLocalStorage = JSON.parse(
+      localStorage.getItem('favoriteRecipes'),
+    );
+    if (value === 'all') {
+      setFavoriteRecipes(favoriteRecipesLocalStorage);
+    } else {
+      const filteredFavorites = favoriteRecipesLocalStorage
+        .filter(({ type }) => type === value);
+      setFavoriteRecipes(filteredFavorites);
+    }
+  };
   return (
     <>
       <Header title="Favorite Recipes" />
@@ -44,18 +62,27 @@ function Favorites() {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          name="All"
+          onClick={ (event) => filterFavorites(event.target) }
+          value="all"
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-food-btn"
+          name="Food"
+          onClick={ (event) => filterFavorites(event.target) }
+          value="food"
         >
           Food
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          name="Drink"
+          onClick={ (event) => filterFavorites(event.target) }
+          value="drink"
         >
           Drink
         </button>
@@ -117,6 +144,7 @@ function Favorites() {
                 src={ BlackHeartIcon }
                 alt="Black Heart Icon"
                 data-testid={ `${index}-horizontal-favorite-btn` }
+                onClick={ () => removeFavorites(id) }
               />
             </div>
           </div>
