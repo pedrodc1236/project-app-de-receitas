@@ -4,7 +4,7 @@ import Footer from '../../Components/Footer';
 import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
-import { fetchMealApi, filterByIngredient } from '../../services/requestsMealApi';
+import { fetchMealApi, filterByIngredientMeal } from '../../services/requestsMealApi';
 import Loading from '../../Components/Loading';
 
 const MAX_RECIPES_INDEX = 12;
@@ -26,7 +26,7 @@ function Foods() {
       setMealsRecipes(response);
     };
     const getByFilterIngredient = async () => {
-      const response = await filterByIngredient(ingredientFoods);
+      const response = await filterByIngredientMeal(ingredientFoods);
       setMealsRecipes(response);
     };
     if (accessFoods) {

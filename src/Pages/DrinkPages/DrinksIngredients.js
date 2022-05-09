@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
-import { cocktailIngredientList } from '../../services/requestsCocktailApi';
+import { cocktailIngredientsList } from '../../services/requestsCocktailApi';
 import AppContext from '../../context/AppContext';
 import Loading from '../../Components/Loading';
 
@@ -21,7 +21,7 @@ function DrinksIngredients({ history }) {
 
   useEffect(() => {
     const apiRequest = async () => {
-      const apiIngredientDrinks = await cocktailIngredientList();
+      const apiIngredientDrinks = await cocktailIngredientsList();
       setArrayIngredientsDrinks(apiIngredientDrinks);
     };
     apiRequest();

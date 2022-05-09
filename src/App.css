@@ -164,3 +164,13 @@ body {
     transform: rotate(-10deg);
   }
 }
+
+.in-progress-ingredients-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.in-progress-ingredients-container input {
+  margin-right: 5px;
+}

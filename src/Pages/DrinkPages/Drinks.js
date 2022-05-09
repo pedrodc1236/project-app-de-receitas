@@ -5,7 +5,7 @@ import Header from '../../Components/Header';
 import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
 import { fetchCocktailApi,
-  FilterByIngredientDrinks } from '../../services/requestsCocktailApi';
+  filterByIngredientDrinks } from '../../services/requestsCocktailApi';
 import Loading from '../../Components/Loading';
 
 const MAX_RECIPES_INDEX = 12;
@@ -27,7 +27,7 @@ function Drinks() {
       setDrinksRecipes(response);
     };
     const getByFilterIngredientDrinks = async () => {
-      const response = await FilterByIngredientDrinks(ingredientDrinks);
+      const response = await filterByIngredientDrinks(ingredientDrinks);
       setDrinksRecipes(response);
     };
     if (accessDrinks) {

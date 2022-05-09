@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
-import { mealIngredientsApi } from '../../services/requestsMealApi';
+import { mealIngredientsList } from '../../services/requestsMealApi';
 import AppContext from '../../context/AppContext';
 import Loading from '../../Components/Loading';
 
@@ -21,7 +21,7 @@ function FoodsIngredients({ history }) {
 
   useEffect(() => {
     const apiRequest = async () => {
-      const apiIngredientFoods = await mealIngredientsApi();
+      const apiIngredientFoods = await mealIngredientsList();
       setArrayIngredientsFoods(apiIngredientFoods);
     };
     apiRequest();

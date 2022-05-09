@@ -55,9 +55,7 @@ function FoodRecipeDetail({ match }) {
   if (isLoading) {
     return <Loading />;
   }
-  const { strMealThumb,
-    strMeal,
-    strYoutube } = recipe;
+  const { strMealThumb, strMeal, strYoutube } = recipe;
 
   const videoYouTube = strYoutube?.split('=')[1];
 

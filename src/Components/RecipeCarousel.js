@@ -36,20 +36,19 @@ function RecipeCarousel({ type }) {
     <section>
       <h3>Recommended</h3>
       <div className="carousel" ref={ carouselRef }>
-        {recomendations?.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
-          .map((recomendation, index) => {
-            const { strDrink, strDrinkThumb, idDrink } = recomendation;
-            return (
+        {recomendations
+          ? recomendations.filter((_, index) => index < MAX_RECOMENDATIONS_INDEX)
+            .map((recomendation, index) => (
               <RecomendationRecipeCard
                 key={ index }
-                name={ strDrink }
-                thumb={ strDrinkThumb }
-                id={ idDrink }
+                name={ recomendation[`str${type}`] }
+                thumb={ recomendation[`str${type}Thumb`] }
+                id={ recomendation[`id${type}`] }
                 index={ index }
-                pageTitle="drinks"
+                pageTitle={ type === 'Drink' ? 'drinks' : 'foods' }
               />
-            );
-          })}
+            ))
+          : null }
       </div>
       <div className="carousel-buttons">
         <input

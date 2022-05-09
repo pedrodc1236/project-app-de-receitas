@@ -1,6 +1,4 @@
-import React, { useState,
-  useEffect,
-  useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -25,7 +23,11 @@ function RecipeHeader({ type }) {
   }, [type, recipe]);
 
   const handleShareButton = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/foods/${recipe[`id${type}`]}`);
+    if (type === 'Meal') {
+      navigator.clipboard.writeText(`http://localhost:3000/foods/${recipe[`id${type}`]}`);
+    } else {
+      navigator.clipboard.writeText(`http://localhost:3000/drinks/${recipe[`id${type}`]}`);
+    }
     setShowSnackbar(true);
     setTimeout(() => {
       setShowSnackbar(false);
@@ -34,7 +36,7 @@ function RecipeHeader({ type }) {
 
   const handleFavoriteButton = () => {
     if (isFavorite) {
-      removeEqualFavorite(recipe[`${type}`]);
+      removeEqualFavorite(recipe[`id${type}`]);
     } else {
       favoriteLocalStorage(recipe, type);
     }
@@ -47,7 +49,7 @@ function RecipeHeader({ type }) {
 
       <div className="recipe-details-info">
         <h5 data-testid="recipe-category">
-          { type === 'Meal' ? recipe.strCategory : recipe.strzAlcoholic }
+          { type === 'Meal' ? recipe.strCategory : recipe.strAlcoholic }
         </h5>
 
         <div className="recipe-details-icons">
