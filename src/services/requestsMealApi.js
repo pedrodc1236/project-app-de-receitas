@@ -9,7 +9,11 @@ export const fetchMealApi = async (radio, inputName) => {
     url += `search.php?s=${inputName}`;
   } else if (radio === 'First letter') {
     url += `search.php?f=${inputName}`;
+  } else {
+    url += 'search.php?s=';
   }
+
+  console.log(url);
 
   const request = await fetch(url);
   const data = await request.json();
@@ -24,7 +28,7 @@ export const mealCategoryRequest = async () => {
   const data = await request.json();
   return data.meals;
 };
-
+//
 export const mealRequestForCategoryBtn = async (category) => {
   let url = urlBase;
   url += `filter.php?c=${category}`;
