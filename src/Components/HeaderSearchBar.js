@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { fetchCocktailApi } from '../services/requestsCocktailApi';
 import { fetchMealApi } from '../services/requestsMealApi';
+import './HeaderSearchBar.css';
 
 function HeaderSearchBar({ title }) {
   const [inputName, setInputName] = useState('');
@@ -68,51 +69,57 @@ function HeaderSearchBar({ title }) {
   };
 
   return (
-    <form>
+    <form className="search-bar">
       <input
         type="search"
         data-testid="search-input"
         value={ inputName }
+        placeholder="Search"
         onChange={ ({ target }) => setInputName(target.value) }
+        className="bar-search form-control"
       />
 
-      <label htmlFor="ingredient">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="ingredient"
-          value="Ingredient"
-          data-testid="ingredient-search-radio"
-          onChange={ handleChangeRadioBtn }
-        />
-        Ingredient
-      </label>
+      <div className="div-search">
+        <label htmlFor="ingredient">
+          <input
+            type="radio"
+            name="searchRadio"
+            id="ingredient"
+            value="Ingredient"
+            data-testid="ingredient-search-radio"
+            onChange={ handleChangeRadioBtn }
+          />
+          Ingredient
+        </label>
 
-      <label htmlFor="name">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="name"
-          value="Name"
-          data-testid="name-search-radio"
-          onChange={ handleChangeRadioBtn }
-        />
-        Name
-      </label>
+        <label htmlFor="name">
+          <input
+            type="radio"
+            name="searchRadio"
+            id="name"
+            value="Name"
+            data-testid="name-search-radio"
+            onChange={ handleChangeRadioBtn }
+          />
+          Name
+        </label>
 
-      <label htmlFor="firstLetter">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="firstLetter"
-          value="First letter"
-          data-testid="first-letter-search-radio"
-          onChange={ handleChangeRadioBtn }
-        />
-        First letter
-      </label>
+        <label htmlFor="firstLetter">
+          <input
+            type="radio"
+            name="searchRadio"
+            id="firstLetter"
+            value="First letter"
+            data-testid="first-letter-search-radio"
+            onChange={ handleChangeRadioBtn }
+          />
+          First letter
+        </label>
+
+      </div>
 
       <button
+        className="btn-search-bar btn btn-secondary"
         type="button"
         data-testid="exec-search-btn"
         onClick={ onSubmit }
@@ -120,6 +127,7 @@ function HeaderSearchBar({ title }) {
       >
         Search
       </button>
+
     </form>
   );
 }

@@ -6,6 +6,7 @@ import RecipeCard from '../../Components/RecipeCard';
 import AppContext from '../../context/AppContext';
 import { fetchMealApi, filterByIngredientMeal } from '../../services/requestsMealApi';
 import Loading from '../../Components/Loading';
+import './Foods.css';
 
 const MAX_RECIPES_INDEX = 12;
 const HALF_SECOND = 500;
@@ -43,10 +44,10 @@ function Foods() {
     return <Loading />;
   }
   return (
-    <>
+    <div className="foods-page">
       <Header title="Foods" />
       <ButtonsFilter title="Foods" />
-      <div className="recipes-container">
+      <div className="recipes">
         {mealsRecipes?.meals.filter((_, index) => index < MAX_RECIPES_INDEX)
           .map((recipe, index) => {
             const { strMeal, strMealThumb, idMeal } = recipe;
@@ -63,7 +64,7 @@ function Foods() {
           })}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

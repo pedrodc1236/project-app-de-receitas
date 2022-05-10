@@ -4,9 +4,9 @@ import Header from '../Components/Header';
 import ShareIcon from '../images/shareIcon.svg';
 import Snackbar from '../Components/Snackbar';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
-import '../services/Favorites.css';
 import Loading from '../Components/Loading';
 import { removeEqualFavorite } from '../Functions/handleFavoriteButton';
+import './Favorites.css';
 
 const THREE_SECONDS = 3000;
 const HALF_SECOND = 500;
@@ -58,13 +58,14 @@ function Favorites() {
   return (
     <>
       <Header title="Favorite Recipes" />
-      <div>
+      <div className="div-buttons">
         <button
           type="button"
           data-testid="filter-by-all-btn"
           name="All"
           onClick={ (event) => filterFavorites(event.target) }
           value="all"
+          className="btn btn-danger"
         >
           All
         </button>
@@ -74,6 +75,7 @@ function Favorites() {
           name="Food"
           onClick={ (event) => filterFavorites(event.target) }
           value="food"
+          className="btn btn-danger"
         >
           Food
         </button>
@@ -83,6 +85,7 @@ function Favorites() {
           name="Drink"
           onClick={ (event) => filterFavorites(event.target) }
           value="drink"
+          className="btn btn-danger"
         >
           Drink
         </button>

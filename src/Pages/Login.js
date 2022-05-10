@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
+import './Login.css';
 
 function Login({ history }) {
   const [validation, setValidation] = useState(true);
@@ -40,33 +41,43 @@ function Login({ history }) {
   };
 
   return (
-    <form>
-      <input
-        data-testid="email-input"
-        type="email"
-        name="email"
-        placeholder="Email"
-        onChange={ handleChange }
-        value={ email }
-        required
+    <form className="form-login">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/3699/3699708.png"
+        alt="chef"
       />
-      <input
-        data-testid="password-input"
-        type="password"
-        name="password"
-        placeholder="Senha"
-        onChange={ handleChange }
-        value={ password }
-        required
-      />
-      <button
-        data-testid="login-submit-btn"
-        type="button"
-        onClick={ HandleLocalStorage }
-        disabled={ validation }
-      >
-        Enter
-      </button>
+      <h3>MUSTACHE RECIPES</h3>
+      <fieldset className="login">
+        <input
+          data-testid="email-input"
+          className="form-control"
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={ handleChange }
+          value={ email }
+          required
+        />
+        <input
+          data-testid="password-input"
+          className="form-control"
+          type="password"
+          name="password"
+          placeholder="Senha"
+          onChange={ handleChange }
+          value={ password }
+          required
+        />
+        <button
+          data-testid="login-submit-btn"
+          className="btn btn-danger"
+          type="button"
+          onClick={ HandleLocalStorage }
+          disabled={ validation }
+        >
+          Enter
+        </button>
+      </fieldset>
     </form>
   );
 }

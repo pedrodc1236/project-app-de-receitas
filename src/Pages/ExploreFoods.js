@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { mealFetchRandom } from '../services/requestsMealApi';
 import Loading from '../Components/Loading';
+import './ExploreFoods.css';
 
 const HALF_SECOND = 500;
 
@@ -34,13 +35,14 @@ function ExploreFoods({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="explore-foods-page">
       <Header title="Explore Foods" />
-      <div>
+      <div className="explore-foods">
         <button
           type="button"
           data-testid="explore-by-ingredient"
           onClick={ redirectForIngredientExplore }
+          className="btn btn-danger explore-foods-btn"
         >
           By Ingredient
         </button>
@@ -48,6 +50,7 @@ function ExploreFoods({ history }) {
           type="button"
           data-testid="explore-by-nationality"
           onClick={ redirectForNationalityExplore }
+          className="btn btn-danger explore-foods-btn"
         >
           By Nationality
         </button>
@@ -55,12 +58,13 @@ function ExploreFoods({ history }) {
           type="button"
           data-testid="explore-surprise"
           onClick={ surprise }
+          className="btn btn-warning explore-foods-btn"
         >
           Surprise me!
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

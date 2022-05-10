@@ -75,7 +75,7 @@ function DrinkRecipeDetail({ match }) {
         <button
           type="button"
           data-testid="start-recipe-btn"
-          className="recipe-details-button"
+          className="recipe-details-button btn btn-danger"
           onClick={ () => history.push(`/drinks/${id}/in-progress`) }
         >
           { changeButtonName() ? 'Continue Recipe' : 'Start Recipe' }

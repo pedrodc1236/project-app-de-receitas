@@ -6,6 +6,7 @@ import { removeEqualIngredient,
   checkStepsCheckbox,
   inProgressLocalStorage } from '../Functions/handleInProgressCheckbox';
 import Loading from './Loading';
+import './RecipeInProgress.css';
 
 const HALF_SECOND = 500;
 
@@ -84,8 +85,12 @@ function RecipeInProgress({ type }) {
   }
 
   return (
-    <section>
-      <h3>Ingredients</h3>
+    <section className="section-ingredients">
+      <h3
+        className="ingredients-title"
+      >
+        Ingredients
+      </h3>
       <div className="in-progress-ingredients-container">
         {Array(ingredients).fill().map((_, index) => {
           const recipeMeasure = recipe[`strMeasure${index + 1}`];
@@ -97,11 +102,12 @@ function RecipeInProgress({ type }) {
               htmlFor={ `${index}-ingredient-step` }
               key={ index }
               data-testid={ `${index}-ingredient-step` }
+              className="form-check-label"
             >
               <input
                 name={ `${index}-ingredient-step` }
                 type="checkbox"
-                className="input-ingredient"
+                className="input-ingredient form-check-input"
                 value={ recipeMeasure }
                 onChange={
                   (event) => handleCheckbox(type, recipeId, stepIndex, event)

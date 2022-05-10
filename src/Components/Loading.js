@@ -1,7 +1,11 @@
 import React from 'react';
 
 function Loading() {
-  return <h1>CARREGANDO...</h1>;
+  return (
+    <div
+      className="c-loader"
+    />
+  );
 }
 
 export default Loading;

@@ -3,6 +3,7 @@ import Proptypes from 'prop-types';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import Loading from '../Components/Loading';
+import './Explore.css';
 
 const HALF_SECOND = 500;
 
@@ -27,13 +28,14 @@ function Explore({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="explore-page">
       <Header title="Explore" />
-      <div>
+      <div className="explore">
         <button
           type="button"
           data-testid="explore-foods"
           onClick={ redirectForFoodsExplore }
+          className="btn btn-danger explore-btn"
         >
           Explore Foods
         </button>
@@ -41,12 +43,13 @@ function Explore({ history }) {
           type="button"
           data-testid="explore-drinks"
           onClick={ redirectForDrinksExplore }
+          className="btn btn-danger explore-btn"
         >
           Explore Drinks
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

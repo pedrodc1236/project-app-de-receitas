@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import Loading from '../Components/Loading';
+import './Profile.css';
 
 const HALF_SECOND = 500;
 
@@ -31,32 +32,38 @@ function Profile({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="profile-page">
       <Header title="Profile" />
-      <h1 data-testid="profile-email">{HandleLocalStorage()}</h1>
-      <button
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ () => onClickLogout() }
-      >
-        Logout
-      </button>
+
+      <div className="profile">
+        <h3 data-testid="profile-email">{HandleLocalStorage()}</h3>
+        <button
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ () => history.push('/done-recipes') }
+          className="btn btn-success profile-btn"
+        >
+          Done Recipes
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ () => history.push('/favorite-recipes') }
+          className="btn btn-primary profile-btn"
+        >
+          Favorite Recipes
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ () => onClickLogout() }
+          className="btn btn-danger profile-btn"
+        >
+          Logout
+        </button>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

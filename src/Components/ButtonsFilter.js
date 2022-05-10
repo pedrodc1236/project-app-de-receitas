@@ -12,6 +12,7 @@ import {
   mealCategoryRequest,
   mealRequestForCategoryBtn,
 } from '../services/requestsMealApi';
+import './ButtonsFilter.css';
 
 function ButtonsFilter({ title }) {
   const {
@@ -77,11 +78,12 @@ function ButtonsFilter({ title }) {
   };
 
   return (
-    <div>
+    <div className="buttons-div">
       <button
         type="button"
         data-testid="All-category-filter"
         onClick={ clickBtnAll }
+        className="btn-filter btn btn-danger"
       >
         All
       </button>
@@ -92,6 +94,7 @@ function ButtonsFilter({ title }) {
               <button
                 key={ index }
                 type="button"
+                className="btn-filter btn btn-danger"
                 data-testid={ `${el.strCategory}-category-filter` }
                 onClick={ targetValueBtnCategory }
                 value={ el.strCategory }
