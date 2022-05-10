@@ -45,7 +45,7 @@ function DrinkRecipeInProgress({ match, history }) {
       <img
         src={ strDrinkThumb }
         alt={ strDrink }
-        className="photo-progress"
+        className="card-img-top"
         data-testid="recipe-photo"
       />
 
