@@ -60,7 +60,7 @@ function FoodRecipeDetail({ match }) {
   const videoYouTube = strYoutube?.split('=')[1];
 
   return (
-    <>
+    <div>
       <img
         src={ strMealThumb }
         alt={ strMeal }
@@ -88,13 +88,13 @@ function FoodRecipeDetail({ match }) {
         <button
           type="button"
           data-testid="start-recipe-btn"
-          className="recipe-details-button"
+          className="recipe-details-button btn btn-danger"
           onClick={ () => history.push(`/foods/${id}/in-progress`) }
         >
           { changeButtonName() ? 'Continue Recipe' : 'Start Recipe' }
         </button>
       )}
-    </>
+    </div>
   );
 }
 
