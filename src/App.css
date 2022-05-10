@@ -1,7 +1,6 @@
 body {
-  background-color: #ccffa3;
+  background-color: #ffda6a;
   color: #242423;
-  padding: 10px;
 }
 
 .meals {
@@ -74,12 +73,6 @@ body {
   height: 200px;
   margin-bottom: 10px;
   width: 200px;
-}
-
-.header-div {
-  background-color: white;
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .btn-ingredient, .btn-ingredient-drinks, .btn-nationality {

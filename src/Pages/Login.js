@@ -70,7 +70,7 @@ function Login({ history }) {
         />
         <button
           data-testid="login-submit-btn"
-          className="btn btn-success"
+          className="btn btn-danger"
           type="button"
           onClick={ HandleLocalStorage }
           disabled={ validation }
