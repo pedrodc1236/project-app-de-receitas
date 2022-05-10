@@ -1,0 +1,19 @@
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-recipe {
+  box-shadow: 5px 4px 17px -3px rgba(0, 0, 0, 0.78);
+  display: flex;
+  height: 200px;
+  width: 130px;
+}
+
+.card-title {
+  color: green;
+  margin: auto;
+  text-align: center;
+}
+
