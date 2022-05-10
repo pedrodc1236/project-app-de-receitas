@@ -5,6 +5,7 @@ import Footer from '../../Components/Footer';
 import { cocktailIngredientsList } from '../../services/requestsCocktailApi';
 import AppContext from '../../context/AppContext';
 import Loading from '../../Components/Loading';
+import './DrinksIngredients.css';
 
 const MAX_LENGTH = 12;
 const HALF_SECOND = 500;
@@ -40,34 +41,38 @@ function DrinksIngredients({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="drinks-ingredients-page">
       <Header title="Explore Ingredients" />
-      { arrayIngredientsDrinks.map((el, index) => (
-        index < MAX_LENGTH
+      <div className="drinks-ingredients">
+        { arrayIngredientsDrinks.map((el, index) => (
+          index < MAX_LENGTH
         && (
-          <button
-            type="button"
-            className="btn-ingredient-drinks"
-            key={ el.strIngredient1 }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => redirectFromDrinks(el.strIngredient1) }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `
-              https://www.thecocktaildb.com/images/ingredients/${el.strIngredient1}-Small.png` }
-              alt={ el.strIngredient1 }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+          <div className="drinks-ingredients-options">
+            <button
+              type="button"
+              className="btn-ingredient-drinks"
+              key={ el.strIngredient1 }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => redirectFromDrinks(el.strIngredient1) }
             >
-              { el.strIngredient1 }
-            </p>
-          </button>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `
+              https://www.thecocktaildb.com/images/ingredients/${el.strIngredient1}-Small.png` }
+                alt={ el.strIngredient1 }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { el.strIngredient1 }
+              </p>
+            </button>
+          </div>
         )
-      ))}
+        ))}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

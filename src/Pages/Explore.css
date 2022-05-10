@@ -1,19 +1,18 @@
-.profile-page {
+.explore-page {
   background-color: #f8f9fa;
   height: 600px;
 }
 
-.profile {
+.explore {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 450px;
-  justify-content: space-between;
-  padding-top: 10px;
+  height: 260px;
+  justify-content: space-evenly;
   width: 100%;
 }
 
-.profile-btn {
+.explore-btn {
   border: 2px solid black;
   font-size: 25px;
   height: 100px;

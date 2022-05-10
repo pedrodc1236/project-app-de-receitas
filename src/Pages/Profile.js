@@ -32,7 +32,7 @@ function Profile({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="profile-page">
       <Header title="Profile" />
 
       <div className="profile">
@@ -41,7 +41,7 @@ function Profile({ history }) {
           data-testid="profile-done-btn"
           type="button"
           onClick={ () => history.push('/done-recipes') }
-          className="btn btn-primary profile-btn"
+          className="btn btn-success profile-btn"
         >
           Done Recipes
         </button>
@@ -49,7 +49,7 @@ function Profile({ history }) {
           data-testid="profile-favorite-btn"
           type="button"
           onClick={ () => history.push('/favorite-recipes') }
-          className="btn btn-warning profile-btn"
+          className="btn btn-primary profile-btn"
         >
           Favorite Recipes
         </button>
@@ -63,7 +63,7 @@ function Profile({ history }) {
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

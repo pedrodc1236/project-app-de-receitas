@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { cocktailFetchRandom } from '../services/requestsCocktailApi';
 import Loading from '../Components/Loading';
+import './ExploreDrinks.css';
 
 const HALF_SECOND = 500;
 
@@ -30,13 +31,14 @@ function ExploreDrinks({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="explore-drinks-page">
       <Header title="Explore Drinks" />
-      <div>
+      <div className="explore-drinks">
         <button
           type="button"
           data-testid="explore-by-ingredient"
           onClick={ redirectForIngredientExplore }
+          className="btn btn-danger explore-drinks-btn"
         >
           By Ingredient
         </button>
@@ -44,12 +46,13 @@ function ExploreDrinks({ history }) {
           type="button"
           data-testid="explore-surprise"
           onClick={ surprise }
+          className="btn btn-warning explore-drinks-btn"
         >
           Surprise me!
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
