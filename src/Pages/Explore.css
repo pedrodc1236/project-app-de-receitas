@@ -1,0 +1,14 @@
+.explore {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 260px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.explore-btn {
+  font-size: 25px;
+  height: 100px;
+  width: 100%;
+}
