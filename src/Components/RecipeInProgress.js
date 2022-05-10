@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../context/AppContext';
@@ -9,32 +10,56 @@ import Loading from './Loading';
 const HALF_SECOND = 500;
 
 function RecipeInProgress({ type }) {
-  const { recipe } = useContext(AppContext);
+  const {
+    recipe,
+    setIsDisabled,
+  } = useContext(AppContext);
 
   const [ingredients, setIngredients] = useState([]);
   const [isChecked, setIsChecked] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const validateButton = (id, param) => {
+    const ingredientLs = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealsProgress = ingredientLs.meals[`${id}`];
+    const cocktailsProgress = ingredientLs.cocktails[`${id}`];
+
+    if (type === 'Meal' && mealsProgress) {
+      const result = ingredientLs.meals[id].length;
+      return result === param;
+    }
+    if (type === 'Drink' && cocktailsProgress) {
+      const result = ingredientLs.cocktails[id].length;
+      return result === param;
+    }
+    return false;
+  };
+
   useEffect(() => {
     const getIngredients = () => {
       const recipeArray = Object.entries(recipe);
-
       const recipeIngredients = recipeArray
         .filter((element) => element[0].includes('strIngredient') && element[1]);
       setIngredients(recipeIngredients.length);
+      return recipeIngredients.length;
     };
 
-    const setArrayChecked = () => {
+    const checkLocalStorage = (param) => {
       if (localStorage.getItem('inProgressRecipes') !== null) {
         setIsChecked(checkStepsCheckbox(type, recipe[`id${type}`]));
+        const result = validateButton(recipe[`id${type}`], param);
+        setIsDisabled(!result);
       }
     };
-    getIngredients();
-    setArrayChecked();
+
+    const ingredientsLength = getIngredients();
+
+    checkLocalStorage(ingredientsLength);
+
     setTimeout(() => {
       setIsLoading(false);
     }, HALF_SECOND);
-  }, [recipe, type]);
+  }, [recipe, type, setIsDisabled]);
 
   const handleCheckbox = (pageType, id, index, event) => {
     const { checked } = event.target;
@@ -44,6 +69,7 @@ function RecipeInProgress({ type }) {
     } else {
       inProgressLocalStorage(pageType, id, index);
     }
+    setIsDisabled(!validateButton(id, ingredients));
   };
 
   if (isChecked.length === 0 && isLoading) {
@@ -83,7 +109,7 @@ function RecipeInProgress({ type }) {
                 // defaultChecked={ isChecked.includes(index) }
                 defaultChecked={ isChecked.includes(stepIndex) }
               />
-              {`${recipeMeasure} ${recipeIngredient}`}
+              <span>{`${recipeMeasure} ${recipeIngredient}`}</span>
             </label>
           );
         })}
@@ -93,6 +119,9 @@ function RecipeInProgress({ type }) {
 }
 
 RecipeInProgress.propTypes = {
+  // history: PropTypes.shape({
+  //   push: PropTypes.func.isRequired,
+  // }).isRequired,
   type: PropTypes.string.isRequired,
 };
 

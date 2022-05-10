@@ -55,7 +55,7 @@ export const cocktailFetchRandom = async () => {
 };
 
 export const cocktailIngredientsList = async () => {
-  let url = urlBase.at;
+  let url = urlBase;
   url += 'list.php?i=list';
 
   const request = await fetch(url);

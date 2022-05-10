@@ -105,6 +105,15 @@ body {
   text-decoration: line-through;
 }
 
+.btn-finish-recipe:disabled {
+  background-color: red;
+}
+
+.photo-progress {
+  height: 200px;
+  width: 200px;
+}
+
 @media ( max-width : 360px ) {
 
   .recipe-img {
