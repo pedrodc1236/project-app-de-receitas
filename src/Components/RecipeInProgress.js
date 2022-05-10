@@ -26,7 +26,6 @@ function RecipeInProgress({ type }) {
 
     if (type === 'Meal' && mealsProgress) {
       const result = ingredientLs.meals[id].length;
-      console.log(ingredients, result);
       return result === param;
     }
     if (type === 'Drink' && cocktailsProgress) {
@@ -45,16 +44,18 @@ function RecipeInProgress({ type }) {
       return recipeIngredients.length;
     };
 
-    const checkLocalStorage = () => {
+    const checkLocalStorage = (param) => {
       if (localStorage.getItem('inProgressRecipes') !== null) {
         setIsChecked(checkStepsCheckbox(type, recipe[`id${type}`]));
+        const result = validateButton(recipe[`id${type}`], param);
+        setIsDisabled(!result);
       }
     };
 
     const ingredientsLength = getIngredients();
-    const result = validateButton(recipe[`id${type}`], ingredientsLength);
-    setIsDisabled(!result);
-    checkLocalStorage();
+
+    checkLocalStorage(ingredientsLength);
+
     setTimeout(() => {
       setIsLoading(false);
     }, HALF_SECOND);

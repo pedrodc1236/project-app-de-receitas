@@ -22,7 +22,6 @@ function Favorites() {
   }, []);
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(favoriteRecipes);
 
   if (isLoading) {
     return <Loading />;
