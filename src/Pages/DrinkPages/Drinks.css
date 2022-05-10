@@ -1,4 +1,4 @@
-.recipes {
+.recipes-drinks {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -6,7 +6,6 @@
   margin-top: 25px;
 }
 
-.foods-page {
+.page-drinks {
   background-color: #f8f9fa;
 }
-

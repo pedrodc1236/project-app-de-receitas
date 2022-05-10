@@ -7,6 +7,7 @@ import AppContext from '../../context/AppContext';
 import { fetchCocktailApi,
   filterByIngredientDrinks } from '../../services/requestsCocktailApi';
 import Loading from '../../Components/Loading';
+import './Drinks.css';
 
 const MAX_RECIPES_INDEX = 12;
 const HALF_SECOND = 500;
@@ -44,10 +45,10 @@ function Drinks() {
     return <Loading />;
   }
   return (
-    <>
+    <div className="page-drinks">
       <Header title="Drinks" />
       <ButtonsFilter title="Drinks" />
-      <div className="recipes-container">
+      <div className="recipes-drinks">
         {drinksRecipes?.drinks.filter((_, index) => index < MAX_RECIPES_INDEX)
           .map((recipe, index) => {
             const { strDrink, strDrinkThumb, idDrink } = recipe;
@@ -64,7 +65,7 @@ function Drinks() {
           })}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

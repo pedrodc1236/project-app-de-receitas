@@ -44,7 +44,7 @@ function Foods() {
     return <Loading />;
   }
   return (
-    <>
+    <div className="foods-page">
       <Header title="Foods" />
       <ButtonsFilter title="Foods" />
       <div className="recipes">
@@ -64,7 +64,7 @@ function Foods() {
           })}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

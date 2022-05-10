@@ -1,0 +1,15 @@
+/* .header-app {
+
+} */
+
+.header-div {
+  background-color: #ffda6a;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.img-header {
+  height: 52px;
+  margin-top: 2px;
+  padding-top: 3px;
+}
