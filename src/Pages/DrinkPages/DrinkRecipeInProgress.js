@@ -56,6 +56,7 @@ function DrinkRecipeInProgress({ match, history }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        className="btn-recipe btn btn-danger"
         disabled={ isDisabled }
         onClick={ redirectFinishRecipe }
       >

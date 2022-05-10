@@ -3,6 +3,7 @@
 } */
 
 .header-div {
+  align-items: center;
   background-color: #ffda6a;
   display: flex;
   justify-content: space-evenly;

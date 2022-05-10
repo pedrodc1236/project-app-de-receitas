@@ -55,7 +55,7 @@ function FoodsNationalities({ history }) {
     <div className="foods-nationality-page">
       <Header title="Explore Nationalities" />
       <select
-        className="foods-nationality-options"
+        className="foods-nationality-options form-control"
         data-testid="explore-by-nationality-dropdown"
         onChange={ onChangeOption }
       >

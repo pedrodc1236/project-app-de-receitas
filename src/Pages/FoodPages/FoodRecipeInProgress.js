@@ -47,7 +47,7 @@ function FoodRecipeInProgressTest({ match, history }) {
       <img
         src={ strMealThumb }
         alt={ strMeal }
-        className="photo-progress"
+        className="card-img-top"
         data-testid="recipe-photo"
       />
 
@@ -57,6 +57,7 @@ function FoodRecipeInProgressTest({ match, history }) {
 
       <button
         type="button"
+        className="btn-recipe btn btn-danger"
         data-testid="finish-recipe-btn"
         disabled={ isDisabled }
         onClick={ redirectFinishRecipe }

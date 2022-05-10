@@ -81,11 +81,6 @@ body {
   width: 200px;
 }
 
-.img-progress {
-  height: 200px;
-  width: 200px;
-}
-
 .li-ingredient {
   list-style-type: none;
 }
@@ -182,14 +177,4 @@ body {
   100% {
     transform: rotate(-10deg);
   }
-}
-
-.in-progress-ingredients-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
-}
-
-.in-progress-ingredients-container input {
-  margin-right: 5px;
 }
