@@ -9,8 +9,12 @@ import { fetchCocktailByIdAPI } from '../../services/requestsCocktailApi';
 
 const HALF_SECOND = 500;
 
-function DrinkRecipeInProgress({ match }) {
-  const { recipe, setRecipe } = useContext(AppContext);
+function DrinkRecipeInProgress({ match, history }) {
+  const {
+    recipe,
+    setRecipe,
+    isDisabled,
+  } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
 
   const { id } = match.params;
@@ -31,11 +35,17 @@ function DrinkRecipeInProgress({ match }) {
   }
 
   const { strDrinkThumb, strDrink } = recipe;
+
+  const redirectFinishRecipe = () => {
+    history.push('/done-recipes');
+  };
+
   return (
     <>
       <img
         src={ strDrinkThumb }
         alt={ strDrink }
+        className="photo-progress"
         data-testid="recipe-photo"
       />
 
@@ -46,6 +56,8 @@ function DrinkRecipeInProgress({ match }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ isDisabled }
+        onClick={ redirectFinishRecipe }
       >
         Finish Recipe
       </button>
@@ -59,6 +71,9 @@ DrinkRecipeInProgress.propTypes = {
     params: PropTypes.objectOf(PropTypes.string).isRequired,
     path: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

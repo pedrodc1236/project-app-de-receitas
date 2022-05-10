@@ -11,8 +11,12 @@ import RecipeInProgress from '../../Components/RecipeInProgress';
 
 const HALF_SECOND = 500;
 
-function FoodRecipeInProgressTest({ match }) {
-  const { recipe, setRecipe } = useContext(AppContext);
+function FoodRecipeInProgressTest({ match, history }) {
+  const {
+    recipe,
+    setRecipe,
+    isDisabled,
+  } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
 
   const { id } = match.params;
@@ -34,11 +38,16 @@ function FoodRecipeInProgressTest({ match }) {
 
   const { strMealThumb, strMeal } = recipe;
 
+  const redirectFinishRecipe = () => {
+    history.push('/done-recipes');
+  };
+
   return (
     <>
       <img
         src={ strMealThumb }
         alt={ strMeal }
+        className="photo-progress"
         data-testid="recipe-photo"
       />
 
@@ -49,6 +58,8 @@ function FoodRecipeInProgressTest({ match }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ isDisabled }
+        onClick={ redirectFinishRecipe }
       >
         Finish Recipe
       </button>
@@ -62,6 +73,9 @@ FoodRecipeInProgressTest.propTypes = {
     params: PropTypes.objectOf(PropTypes.string).isRequired,
     path: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
