@@ -5,6 +5,7 @@ import Footer from '../../Components/Footer';
 import { mealIngredientsList } from '../../services/requestsMealApi';
 import AppContext from '../../context/AppContext';
 import Loading from '../../Components/Loading';
+import './FoodsIngredients.css';
 
 const HALF_SECOND = 500;
 const MAX_LENGTH = 12;
@@ -40,33 +41,37 @@ function FoodsIngredients({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="foods-ingredients-page">
       <Header title="Explore Ingredients" />
-      { arrayIngredientsFoods.map((el, index) => (
-        index < MAX_LENGTH
+      <div className="foods-ingredients">
+        { arrayIngredientsFoods.map((el, index) => (
+          index < MAX_LENGTH
         && (
-          <button
-            type="button"
-            className="btn-ingredient"
-            key={ el.strIngredient }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => redirectFromFoods(el.strIngredient) }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.themealdb.com/images/ingredients/${el.strIngredient}-Small.png` }
-              alt={ el.strIngredient }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+          <div className="foods-ingredients-options">
+            <button
+              type="button"
+              className="btn-ingredient"
+              key={ el.strIngredient }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => redirectFromFoods(el.strIngredient) }
             >
-              { el.strIngredient }
-            </p>
-          </button>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.themealdb.com/images/ingredients/${el.strIngredient}-Small.png` }
+                alt={ el.strIngredient }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { el.strIngredient }
+              </p>
+            </button>
+          </div>
         )
-      ))}
+        ))}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

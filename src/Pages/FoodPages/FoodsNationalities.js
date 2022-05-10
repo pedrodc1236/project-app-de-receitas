@@ -6,6 +6,7 @@ import { filterByNationality,
   filterByEachNationality, fetchMealApi } from '../../services/requestsMealApi';
 import AppContext from '../../context/AppContext';
 import Loading from '../../Components/Loading';
+import './FoodsNationality.css';
 
 const HALF_SECOND = 500;
 const MAX_LENGTH = 12;
@@ -51,9 +52,10 @@ function FoodsNationalities({ history }) {
     return <Loading />;
   }
   return (
-    <>
+    <div className="foods-nationality-page">
       <Header title="Explore Nationalities" />
       <select
+        className="foods-nationality-options"
         data-testid="explore-by-nationality-dropdown"
         onChange={ onChangeOption }
       >
@@ -73,32 +75,36 @@ function FoodsNationalities({ history }) {
           </option>
         )) }
       </select>
-      { apiNationality.meals.map((nationality, index) => (
-        index < MAX_LENGTH
+      <div className="foods-nationality">
+        { apiNationality.meals.map((nationality, index) => (
+          index < MAX_LENGTH
           && (
-            <button
-              key={ index }
-              type="button"
-              className="btn-nationality"
-              data-testid={ `${index}-recipe-card` }
-              onClick={ () => onClickCard(nationality.idMeal) }
-            >
-              <img
-                className="img-foods"
-                src={ nationality.strMealThumb }
-                alt={ nationality.strMeal }
-                data-testid={ `${index}-card-img` }
-              />
-              <p
-                data-testid={ `${index}-card-name` }
+            <div className="foods-nationalities">
+              <button
+                key={ index }
+                type="button"
+                className="btn-nationality"
+                data-testid={ `${index}-recipe-card` }
+                onClick={ () => onClickCard(nationality.idMeal) }
               >
-                { nationality.strMeal }
-              </p>
-            </button>
+                <img
+                  className="img-foods"
+                  src={ nationality.strMealThumb }
+                  alt={ nationality.strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                >
+                  { nationality.strMeal }
+                </p>
+              </button>
+            </div>
           )
-      )) }
+        )) }
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

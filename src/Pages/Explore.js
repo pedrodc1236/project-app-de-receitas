@@ -28,7 +28,7 @@ function Explore({ history }) {
     return <Loading />;
   }
   return (
-    <div>
+    <div className="explore-page">
       <Header title="Explore" />
       <div className="explore">
         <button
