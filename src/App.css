@@ -112,6 +112,10 @@ body {
   width: 250px;
 }
 
+a {
+  color: black;
+}
+
 @keyframes is-rotating {
 
   to {
