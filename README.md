@@ -2,11 +2,10 @@ Projeto de App de Receitas!
 
 Projeto de conclusão do módulo Front-End, em grupo, com a participação dos seguintes integrantes:
 • pedrodc1236
-• Lucas Nascimento
-• Viktor
-• Jose
-• Alexandre
-
+• LucasNascimento1609
+• Vitor-Pacheco
+• carlos-souza-lima
+• aklimak
 
 Foi desenvolvido um app de receitas, utilizando o que há de mais moderno dentro do ecossistema React: Hooks e Context API!
 Nele é possível ver, buscar, filtrar, favoritar, e acompanhar o progresso de preparação de receitas e drinks!
