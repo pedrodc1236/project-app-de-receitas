@@ -42,7 +42,7 @@ O layout tem como foco dispositivos móveis.
 
 ## Instalação do projeto localmente:
  
-Após cada um dos passos, haverá um exemplo do comando a ser digitado para fazer o que está sendo pedido, caso tenha dificuldades e o exemplo não seja suficiente, não hesite em me contatar em _annagarcia@id.uff.br_ 
+Após cada um dos passos, haverá um exemplo do comando a ser digitado para fazer o que está sendo pedido, caso tenha dificuldades e o exemplo não seja suficiente, não hesite em me contatar em pedrodc1236@gmail.com
 
 1. Abra o terminal e crie um diretório no local de sua preferência com o comando **mkdir**:
 ```javascript
