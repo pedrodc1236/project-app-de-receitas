@@ -33,12 +33,12 @@ O layout tem como foco dispositivos móveis.
 - Criar Hooks customizados
 
 ## Tecnologias utilizadas:
-• React
-• Context API
-• React Hooks
-• JavaScript
-• HTML5
-• CSS3
+- React
+- Context API
+- React Hooks
+- JavaScript
+- HTML5
+- CSS3
 
 ## Instalação do projeto localmente:
  
