@@ -52,7 +52,7 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
 2. Entre no diretório que acabou de criar e depois clone o projeto:
 ```javascript
   cd projetos
-  git clonegit@github.com:pedrodc1236/project-app-de-receitas.git
+  git clone git@github.com:pedrodc1236/project-app-de-receitas.git
 ```
 
 3. Acesse o diretório do projeto e depois utilize o comando **npm install** para instalar todas as dependências necessárias:
